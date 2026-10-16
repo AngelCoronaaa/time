@@ -4,14 +4,20 @@ Página web con un reloj grande y el clima de tu ciudad sobre fondos relajantes 
 
 ## Qué incluye
 
-- **Reloj** con fecha en español. Puede mostrarse en 24 h o 12 h, con o sin segundos. Muestra la hora de la ciudad elegida, aunque esté en otra zona horaria.
+- **Reloj** con fecha. Puede mostrarse en 24 h o 12 h, con o sin segundos. Muestra la hora de la ciudad elegida, aunque esté en otra zona horaria.
+  - 6 estilos: Clásico, Flotante, Apilado, Analógico, Flip y Neón.
+  - 8 fuentes: Moderna, Redondeada, Elegante, Condensada, Futurista, Monoespaciada, Manuscrita y Retro.
+  - 7 colores: Automático, Dorado, Menta, Lavanda, Coral, Hielo y Degradado.
 - **Clima actual**: temperatura, sensación térmica, máxima y mínima, humedad, viento, probabilidad de lluvia, índice UV, amanecer y atardecer. También el pronóstico de las próximas 8 horas y de 6 días. Se actualiza cada 15 minutos.
+  - 5 diseños de widgets: Completo, Compacto, Lateral (reloj a la izquierda y clima en columna), Mosaico (fichas sueltas) y Oculto.
+  - Las mismas 8 fuentes del reloj, que se eligen por separado.
 - **Ubicación automática**: se usa el GPS del navegador. Si no está disponible (lo normal en una TV), se usa una ubicación aproximada por IP. También puedes buscar cualquier ciudad a mano.
 - **Fondos**:
   - 7 animaciones: Aurora, Océano, Cielo, Lluvia, Nieve, Noche estrellada y Luciérnagas. Cada una tiene versión de día y de noche.
   - 10 videos: olas, atardecer, lluvia, cascada, aurora boreal, estrellas, nieve, chimenea y nubes.
   - Modo **Automático**: elige el fondo según el clima y la hora.
 - **Tema**: Claro, Oscuro o Automático. El automático cambia a oscuro al anochecer en tu ciudad.
+- **Vidrio**: Líquido, Transparente, Esmerilado o Sólido. Sólido quita la transparencia y es el más rápido en TVs lentas.
 - **Idioma**: español o inglés, en **Ajustes → Apariencia**. Se traduce toda la página, incluidos la fecha, el clima y el nombre de la ciudad detectada.
 - **Pantalla completa** con un botón, sin barra de URL.
 - **Modo Ahorro (Smart TV)**: reduce la resolución y la fluidez de las animaciones para que vayan suaves en TVs con poca potencia. Se activa solo cuando detecta una TV.
@@ -42,12 +48,15 @@ Abre <http://localhost:8000>. El GPS solo funciona en `localhost` o con `https:/
 3. Con las flechas del control ve al botón de **pantalla completa** (⛶) y pulsa **OK**. Si tu TV no lo permite, usa la opción de pantalla completa del menú del navegador.
 4. Si la ciudad no es la correcta, abre **Ajustes** (botón de la derecha) y búscala en **Ubicación**.
 
+Los ajustes están en pestañas (Apariencia, Reloj, Clima, Fondo y Ubicación). Al llegar a una pestaña con las flechas se abre sola. Si algo no cabe en la pantalla, la página se desplaza sola al mover el foco, o con **CH+ / CH−**.
+
 **Control remoto**
 
 | Tecla | Acción |
 | --- | --- |
 | Flechas | Moverse entre botones |
 | OK | Elegir |
+| CH+ / CH− | Desplazar la página arriba / abajo |
 | Atrás | Cerrar ajustes |
 | Botón rojo | Siguiente fondo |
 | Botón verde | Cambiar tema |
@@ -72,7 +81,7 @@ Los botones de colores funcionan solo en las TVs cuyo navegador los envía a la 
 Puedes guardar la configuración en la dirección, y así no tendrás que tocar los ajustes con el control:
 
 ```
-https://angelcoronaaa.github.io/time/?bg=v-olas&theme=dark&forecast=false
+https://angelcoronaaa.github.io/time/?bg=v-olas&theme=dark&clockStyle=flip&widgetStyle=side
 ```
 
 | Parámetro | Valores |
@@ -83,7 +92,11 @@ https://angelcoronaaa.github.io/time/?bg=v-olas&theme=dark&forecast=false
 | `hour12` | `true`, `false` |
 | `seconds` | `true`, `false` |
 | `unit` | `c`, `f` |
-| `forecast` | `true` (completo), `false` (solo reloj) |
+| `clockStyle` | `classic`, `floating`, `stacked`, `analog`, `flip`, `neon` |
+| `clockFont`, `widgetFont` | `inter`, `quicksand`, `playfair`, `bebas`, `orbitron`, `mono`, `caveat`, `righteous` |
+| `clockColor` | `auto`, `gold`, `mint`, `lavender`, `coral`, `ice`, `gradient` |
+| `widgetStyle` | `full`, `compact`, `side`, `tiles`, `hidden` |
+| `glass` | `liquid`, `clear`, `frosted`, `solid` |
 | `quality` | `high`, `eco` |
 
 ## Sin barra de URL en celular o tablet
@@ -124,4 +137,4 @@ Si modificas `css/styles.css` o algún archivo de `js/`, sube el número `?v=` d
 - Datos del clima: [Open-Meteo.com](https://open-meteo.com) (CC BY 4.0).
 - Videos: [Mixkit](https://mixkit.co) (licencia gratuita).
 - Ubicación: [BigDataCloud](https://www.bigdatacloud.com), [GeoJS](https://www.geojs.io) y [OpenStreetMap Nominatim](https://nominatim.org).
-- Tipografía: [Inter](https://rsms.me/inter/).
+- Tipografías de [Google Fonts](https://fonts.google.com): Inter, Quicksand, Playfair Display, Bebas Neue, Orbitron, JetBrains Mono, Caveat y Righteous.

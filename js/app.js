@@ -26,6 +26,32 @@
     { id: 'v-nubes', name: { es: 'Nubes', en: 'Clouds' }, src: mixkit(2408), swatch: 'linear-gradient(180deg,#3f8fdc,#ffffff)' }
   ];
 
+  /* Fuentes disponibles para el reloj y los widgets (cargadas en index.html).
+     w = grosor del reloj, ww = grosor de la temperatura en los widgets */
+  var FONTS = [
+    { id: 'inter', family: "'Inter'", w: 200, ww: 300, name: { es: 'Moderna', en: 'Modern' } },
+    { id: 'quicksand', family: "'Quicksand'", w: 300, ww: 400, name: { es: 'Redondeada', en: 'Rounded' } },
+    { id: 'playfair', family: "'Playfair Display'", w: 400, ww: 500, name: { es: 'Elegante', en: 'Elegant' } },
+    { id: 'bebas', family: "'Bebas Neue'", w: 400, ww: 400, name: { es: 'Condensada', en: 'Condensed' } },
+    { id: 'orbitron', family: "'Orbitron'", w: 400, ww: 500, name: { es: 'Futurista', en: 'Futuristic' } },
+    { id: 'mono', family: "'JetBrains Mono'", w: 200, ww: 300, name: { es: 'Monoespaciada', en: 'Monospace' } },
+    { id: 'caveat', family: "'Caveat'", w: 500, ww: 600, name: { es: 'Manuscrita', en: 'Handwritten' } },
+    { id: 'righteous', family: "'Righteous'", w: 400, ww: 400, name: { es: 'Retro', en: 'Retro' } }
+  ];
+
+  var CLOCK_STYLES = ['classic', 'floating', 'stacked', 'analog', 'flip', 'neon'];
+  var CLOCK_COLORS = [
+    { id: 'auto', sw: 'linear-gradient(135deg,#ffffff 50%,#1b1f2a 50%)' },
+    { id: 'gold', sw: '#ffd58a' },
+    { id: 'mint', sw: '#8ff3d2' },
+    { id: 'lavender', sw: '#cbb8ff' },
+    { id: 'coral', sw: '#ffab94' },
+    { id: 'ice', sw: '#a9dcff' },
+    { id: 'gradient', sw: 'linear-gradient(135deg,#ffb2d6,#c9a7ff 50%,#8fd6ff)' }
+  ];
+  var WIDGET_STYLES = ['full', 'compact', 'side', 'tiles', 'hidden'];
+  var GLASS_STYLES = ['liquid', 'clear', 'frosted', 'solid'];
+
   /* --------------------------------------------------------------------------
      Textos de la interfaz (español / inglés)
      -------------------------------------------------------------------------- */
@@ -38,9 +64,11 @@
       am: 'a. m.', pm: 'p. m.',
       now: 'Ahora', today: 'Hoy',
       hiLoFeels: 'Máx {0}° · Mín {1}° · Sensación {2}°',
+      hiLo: 'Máx {0}° · Mín {1}°',
+      feels: 'Sensación {0}°',
       humidity: 'Humedad', wind: 'Viento', rain: 'Lluvia', uv: 'Índice UV', sunrise: 'Amanecer', sunset: 'Atardecer',
       updatedNow: 'Actualizado hace un momento', updatedMin: 'Actualizado hace {0} min', updatedH: 'Actualizado hace {0} h',
-      weatherCredit: '',
+      weatherCredit: 'Clima: Open-Meteo.com',
       gettingWeather: 'Obteniendo clima…',
       offline: 'Sin conexión, mostrando datos guardados',
       weatherFail: 'No se pudo cargar el clima, reintentando…',
@@ -68,6 +96,11 @@
       langToast: 'Idioma: Español',
       scene_aurora: 'Aurora', scene_ocean: 'Océano', scene_clouds: 'Cielo', scene_rain: 'Lluvia',
       scene_snow: 'Nieve', scene_stars: 'Noche estrellada', scene_fireflies: 'Luciérnagas',
+      cstyle_classic: 'Clásico', cstyle_floating: 'Flotante', cstyle_stacked: 'Apilado',
+      cstyle_analog: 'Analógico', cstyle_flip: 'Flip', cstyle_neon: 'Neón',
+      color_auto: 'Automático', color_gold: 'Dorado', color_mint: 'Menta', color_lavender: 'Lavanda',
+      color_coral: 'Coral', color_ice: 'Hielo', color_gradient: 'Degradado',
+      wstyle_full: 'Completo', wstyle_compact: 'Compacto', wstyle_side: 'Lateral', wstyle_tiles: 'Mosaico', wstyle_hidden: 'Oculto',
       // textos fijos del HTML (data-i18n)
       changeLocation: 'Cambiar ubicación',
       controls: 'Controles',
@@ -76,16 +109,20 @@
       fullscreen: 'Pantalla completa', fullscreenKey: 'Pantalla completa (F)',
       settings: 'Ajustes', settingsKey: 'Ajustes (S)', closeSettings: 'Cerrar ajustes',
       nextHours: 'Próximas horas', nextDays: 'Próximos días',
-      appearance: 'Apariencia', theme: 'Tema', light: 'Claro', dark: 'Oscuro', auto: 'Automático',
+      appearance: 'Apariencia', clock: 'Reloj', weatherTab: 'Clima',
+      theme: 'Tema', light: 'Claro', dark: 'Oscuro', auto: 'Automático',
       themeHint: 'Automático usa modo claro de día y oscuro al anochecer en tu ciudad.',
       language: 'Idioma',
+      glass: 'Vidrio', glass_liquid: 'Líquido', glass_clear: 'Transparente', glass_frosted: 'Esmerilado', glass_solid: 'Sólido (más rápido)',
+      glassHint: 'Sólido quita la transparencia: úsalo si tu TV va lenta.',
+      style: 'Estilo', font: 'Fuente', color: 'Color', layout: 'Diseño',
       background: 'Fondo', animations: 'Animaciones', videos: 'Videos',
       videoPh: 'O pega la URL de un video .mp4', use: 'Usar',
-      location: 'Ubicación', useMyLocation: 'Usar mi ubicación actual', searchPh: 'Buscar otra ciudad…', search: 'Buscar',
-      display: 'Pantalla', timeFormat: 'Formato de hora', seconds: 'Segundos', show: 'Mostrar', hide: 'Ocultar',
-      temperature: 'Temperatura', forecast: 'Pronóstico', clockOnly: 'Solo reloj',
+      location: 'Ubicación', current: 'Actual', useMyLocation: 'Usar mi ubicación actual', searchPh: 'Buscar otra ciudad…', search: 'Buscar',
+      timeFormat: 'Formato de hora', seconds: 'Segundos', show: 'Mostrar', hide: 'Ocultar',
+      temperature: 'Temperatura',
       performance: 'Rendimiento', highQuality: 'Alta calidad', eco: 'Ahorro (Smart TV)',
-      footHtml: 'Control remoto: flechas para moverte y OK para elegir. Teclado: <kbd>F</kbd> pantalla completa · <kbd>T</kbd> tema · <kbd>L</kbd> idioma · <kbd>B</kbd> fondo · <kbd>S</kbd> ajustes.',
+      footHtml: 'Control remoto: flechas para moverte, OK para elegir y CH+/CH− para desplazarte. Teclado: <kbd>F</kbd> pantalla completa · <kbd>T</kbd> tema · <kbd>L</kbd> idioma · <kbd>B</kbd> fondo · <kbd>S</kbd> ajustes.',
       wmo: {
         0: 'Despejado', 1: 'Mayormente despejado', 2: 'Parcialmente nublado', 3: 'Nublado',
         45: 'Niebla', 48: 'Niebla con escarcha',
@@ -104,9 +141,11 @@
       am: 'AM', pm: 'PM',
       now: 'Now', today: 'Today',
       hiLoFeels: 'High {0}° · Low {1}° · Feels like {2}°',
+      hiLo: 'High {0}° · Low {1}°',
+      feels: 'Feels like {0}°',
       humidity: 'Humidity', wind: 'Wind', rain: 'Rain', uv: 'UV index', sunrise: 'Sunrise', sunset: 'Sunset',
       updatedNow: 'Updated just now', updatedMin: 'Updated {0} min ago', updatedH: 'Updated {0} h ago',
-      weatherCredit: 'Weather: Open-Meteo.com',
+      weatherCredit: '',
       gettingWeather: 'Getting the weather…',
       offline: 'Offline, showing saved data',
       weatherFail: "Couldn't load the weather, retrying…",
@@ -134,6 +173,11 @@
       langToast: 'Language: English',
       scene_aurora: 'Aurora', scene_ocean: 'Ocean', scene_clouds: 'Sky', scene_rain: 'Rain',
       scene_snow: 'Snow', scene_stars: 'Starry night', scene_fireflies: 'Fireflies',
+      cstyle_classic: 'Classic', cstyle_floating: 'Floating', cstyle_stacked: 'Stacked',
+      cstyle_analog: 'Analog', cstyle_flip: 'Flip', cstyle_neon: 'Neon',
+      color_auto: 'Automatic', color_gold: 'Gold', color_mint: 'Mint', color_lavender: 'Lavender',
+      color_coral: 'Coral', color_ice: 'Ice', color_gradient: 'Gradient',
+      wstyle_full: 'Full', wstyle_compact: 'Compact', wstyle_side: 'Sidebar', wstyle_tiles: 'Tiles', wstyle_hidden: 'Hidden',
       changeLocation: 'Change location',
       controls: 'Controls',
       changeBg: 'Change background', changeBgKey: 'Change background (B)',
@@ -141,16 +185,20 @@
       fullscreen: 'Full screen', fullscreenKey: 'Full screen (F)',
       settings: 'Settings', settingsKey: 'Settings (S)', closeSettings: 'Close settings',
       nextHours: 'Next hours', nextDays: 'Next days',
-      appearance: 'Appearance', theme: 'Theme', light: 'Light', dark: 'Dark', auto: 'Automatic',
+      appearance: 'Appearance', clock: 'Clock', weatherTab: 'Weather',
+      theme: 'Theme', light: 'Light', dark: 'Dark', auto: 'Automatic',
       themeHint: 'Automatic uses light mode during the day and dark mode after sunset in your city.',
       language: 'Language',
+      glass: 'Glass', glass_liquid: 'Liquid', glass_clear: 'Clear', glass_frosted: 'Frosted', glass_solid: 'Solid (faster)',
+      glassHint: 'Solid removes transparency: use it if your TV feels slow.',
+      style: 'Style', font: 'Font', color: 'Color', layout: 'Layout',
       background: 'Background', animations: 'Animations', videos: 'Videos',
       videoPh: 'Or paste the URL of an .mp4 video', use: 'Use',
-      location: 'Location', useMyLocation: 'Use my current location', searchPh: 'Search for another city…', search: 'Search',
-      display: 'Display', timeFormat: 'Time format', seconds: 'Seconds', show: 'Show', hide: 'Hide',
-      temperature: 'Temperature', forecast: 'Forecast', clockOnly: 'Clock only',
+      location: 'Location', current: 'Current', useMyLocation: 'Use my current location', searchPh: 'Search for another city…', search: 'Search',
+      timeFormat: 'Time format', seconds: 'Seconds', show: 'Show', hide: 'Hide',
+      temperature: 'Temperature',
       performance: 'Performance', highQuality: 'High quality', eco: 'Power saving (Smart TV)',
-      footHtml: 'Remote: use the arrows to move and OK to select. Keyboard: <kbd>F</kbd> full screen · <kbd>T</kbd> theme · <kbd>L</kbd> language · <kbd>B</kbd> background · <kbd>S</kbd> settings.',
+      footHtml: 'Remote: arrows to move, OK to select and CH+/CH− to scroll. Keyboard: <kbd>F</kbd> full screen · <kbd>T</kbd> theme · <kbd>L</kbd> language · <kbd>B</kbd> background · <kbd>S</kbd> settings.',
       wmo: {
         0: 'Clear', 1: 'Mostly clear', 2: 'Partly cloudy', 3: 'Cloudy',
         45: 'Fog', 48: 'Freezing fog',
@@ -176,17 +224,35 @@
     }
   };
 
-  var settings = {
-    lang: store.get('lang', 'es'),           // es | en
-    theme: store.get('theme', 'auto'),       // light | dark | auto
-    bg: store.get('bg', 'auto'),             // auto | id de escena | id de video
-    hour12: store.get('hour12', false),
-    seconds: store.get('seconds', true),
-    unit: store.get('unit', 'c'),
-    forecast: store.get('forecast', true),
-    quality: store.get('quality', IS_TV ? 'eco' : 'high'),
-    customVideo: store.get('customVideo', '')
+  function ids(list) { return list.map(function (x) { return typeof x === 'string' ? x : x.id; }); }
+
+  var DEFAULTS = {
+    lang: 'es', theme: 'auto', bg: 'auto', hour12: false, seconds: true, unit: 'c',
+    quality: IS_TV ? 'eco' : 'high', customVideo: '',
+    clockStyle: 'classic', clockFont: 'inter', clockColor: 'auto',
+    widgetStyle: 'full', widgetFont: 'inter', glass: 'liquid'
   };
+  /* Valores válidos de cada ajuste (lo demás se descarta) */
+  var ENUMS = {
+    lang: ['es', 'en'], theme: ['auto', 'light', 'dark'], unit: ['c', 'f'], quality: ['high', 'eco'],
+    clockStyle: CLOCK_STYLES, clockFont: ids(FONTS), clockColor: ids(CLOCK_COLORS),
+    widgetStyle: WIDGET_STYLES, widgetFont: ids(FONTS), glass: GLASS_STYLES
+  };
+  function isValid(key, v) {
+    if (ENUMS[key]) return ENUMS[key].indexOf(v) >= 0;
+    if (typeof DEFAULTS[key] === 'boolean') return typeof v === 'boolean';
+    return typeof v === 'string';
+  }
+
+  var settings = {};
+  (function () {
+    for (var k in DEFAULTS) {
+      var v = store.get(k, DEFAULTS[k]);
+      settings[k] = isValid(k, v) ? v : DEFAULTS[k];
+    }
+    // versiones anteriores tenían "forecast: false" (solo reloj)
+    if (store.get('widgetStyle', null) === null && store.get('forecast', true) === false) settings.widgetStyle = 'compact';
+  })();
 
   var state = {
     loc: store.get('loc', null),             // { lat, lon, name, source: gps|ip|manual }
@@ -212,11 +278,12 @@
   var root = document.documentElement, body = document.body;
   var el = {
     stage: $('stage'), locBtn: $('locBtn'), locName: $('locName'), toolbar: $('toolbar'),
-    hh: $('hh'), mm: $('mm'), ss: $('ss'), ampm: $('ampm'), date: $('date'),
-    nowIcon: $('nowIcon'), nowTemp: $('nowTemp'), nowDesc: $('nowDesc'), nowSub: $('nowSub'),
-    stats: $('stats'), hours: $('hours'), days: $('days'), status: $('status'),
+    time: $('time'), hh: $('hh'), mm: $('mm'), ss: $('ss'), ampm: $('ampm'), date: $('date'), analog: $('analog'),
+    weather: $('weather'), status: $('status'),
     overlay: $('overlay'), panel: $('panel'), panelBody: $('panelBody'),
     sceneChips: $('sceneChips'), videoChips: $('videoChips'), videoForm: $('videoForm'), videoUrl: $('videoUrl'),
+    clockStyles: $('clockStyles'), clockFonts: $('clockFonts'), clockColors: $('clockColors'),
+    widgetStyles: $('widgetStyles'), widgetFonts: $('widgetFonts'),
     panelLoc: $('panelLoc'), panelLocSrc: $('panelLocSrc'), searchForm: $('searchForm'), searchInput: $('searchInput'), results: $('results'),
     toast: $('toast'), themeIcon: $('themeIcon'), fsIcon: $('fsIcon'),
     canvas: $('bgCanvas'), video: $('bgVideo'), metaTheme: document.querySelector('meta[name="theme-color"]')
@@ -233,12 +300,17 @@
     });
   }
   function toArray(list) { return Array.prototype.slice.call(list); }
+  function hasClass(node, c) { return !!(node && node.classList && node.classList.contains(c)); }
   function closest(node, selector) {
     while (node && node !== document) {
       if (node.nodeType === 1 && (node.matches || node.webkitMatchesSelector).call(node, selector)) return node;
       node = node.parentNode;
     }
     return null;
+  }
+  function findById(list, id) {
+    for (var i = 0; i < list.length; i++) if (list[i].id === id) return list[i];
+    return list[0];
   }
 
   function getJSON(url, timeout) {
@@ -312,20 +384,108 @@
     return fmtHM(parseInt(hm.slice(0, 2), 10), parseInt(hm.slice(3, 5), 10));
   }
 
+  /* Cada dígito vive en su propia caja: ancho fijo (no "baila") y ficha en estilo flip */
+  function setDigits(node, str) {
+    var kids = node.children, i;
+    if (kids.length !== str.length) {
+      node.innerHTML = '';
+      for (i = 0; i < str.length; i++) {
+        var d = document.createElement('span');
+        d.className = 'd';
+        d.textContent = str.charAt(i);
+        node.appendChild(d);
+      }
+      return;
+    }
+    for (i = 0; i < str.length; i++) {
+      var ch = str.charAt(i);
+      if (kids[i].textContent === ch || kids[i].getAttribute('data-next') === ch) continue;
+      if (settings.clockStyle === 'flip' && document.visibilityState !== 'hidden') flipDigit(kids[i], ch);
+      else kids[i].textContent = ch;
+    }
+  }
+  function flipDigit(d, ch) {
+    d.setAttribute('data-next', ch);
+    d.className = 'd flip';
+    setTimeout(function () { d.textContent = ch; }, 190);
+    setTimeout(function () { d.className = 'd'; d.removeAttribute('data-next'); }, 440);
+  }
+
+  /* Mide el dígito más ancho de la fuente actual para fijar el ancho de las cajas */
+  function measureDigits() {
+    if (!el.hh.firstChild) return;
+    var probe = document.createElement('span');
+    probe.className = 'd';
+    probe.style.cssText = 'position:absolute;visibility:hidden;width:auto;padding:0;margin:0;';
+    el.hh.appendChild(probe);
+    var fs = parseFloat(window.getComputedStyle(probe).fontSize) || 0, max = 0;
+    for (var i = 0; i <= 9; i++) {
+      probe.textContent = String(i);
+      max = Math.max(max, probe.getBoundingClientRect().width);
+    }
+    el.hh.removeChild(probe);
+    if (fs && max) el.time.style.setProperty('--dw', (max / fs + 0.02).toFixed(3) + 'em');
+  }
+  function measureWhenFontReady() {
+    measureDigits();
+    if (document.fonts && document.fonts.load) {
+      var f = findById(FONTS, settings.clockFont);
+      document.fonts.load(f.w + ' 100px ' + f.family).then(measureDigits, function () { /* sin fuente: se queda la medida */ });
+    }
+  }
+
+  /* ---------- reloj analógico ---------- */
+  var hands = {}, handAngle = {}, handTurns = {};
+  function buildAnalog() {
+    var s = '<svg viewBox="0 0 200 200" aria-hidden="true">', i;
+    for (i = 0; i < 60; i++) {
+      var big = i % 5 === 0;
+      s += '<line class="tk' + (big ? ' big' : '') + '" x1="100" y1="' + (big ? 12 : 13) + '" x2="100" y2="' + (big ? 24 : 18) +
+        '" transform="rotate(' + (i * 6) + ' 100 100)"/>';
+    }
+    [[12, 100, 40], [3, 160, 100], [6, 100, 160], [9, 40, 100]].forEach(function (q) {
+      s += '<text class="num" x="' + q[1] + '" y="' + q[2] + '">' + q[0] + '</text>';
+    });
+    s += '<g class="hand h" id="handH"><line x1="100" y1="110" x2="100" y2="56"/></g>' +
+      '<g class="hand m" id="handM"><line x1="100" y1="114" x2="100" y2="32"/></g>' +
+      '<g class="hand s" id="handS"><line x1="100" y1="124" x2="100" y2="26"/><circle cx="100" cy="100" r="3.6"/></g>' +
+      '<circle class="pin" cx="100" cy="100" r="1.8"/></svg>';
+    el.analog.innerHTML = s;
+    hands = { h: $('handH'), m: $('handM'), s: $('handS') };
+    resetHands();
+  }
+  function resetHands() { handAngle = { h: null, m: null, s: null }; handTurns = { h: 0, m: 0, s: 0 }; }
+  function setHand(k, deg) {
+    var prev = handAngle[k];
+    // siempre hacia adelante: de 59 s a 0 s la aguja da la vuelta en lugar de regresar
+    if (prev !== null && deg + handTurns[k] < prev - 0.01) handTurns[k] += 360;
+    var a = deg + handTurns[k];
+    var jump = prev === null || Math.abs(a - prev) > 45;
+    hands[k].style.transition = jump ? 'none' : '';
+    hands[k].style.transform = 'rotate(' + a.toFixed(2) + 'deg)';
+    handAngle[k] = a;
+  }
+  function updateAnalog(n) {
+    if (settings.clockStyle !== 'analog' || !hands.h) return;
+    setHand('h', (n.h % 12) * 30 + n.m * 0.5);
+    setHand('m', n.m * 6 + n.s * 0.1);
+    setHand('s', n.s * 6);
+  }
+
   var lastMinute = -1, lastHour = -1;
   function tick() {
     var n = localNow();
     var h = n.h;
     if (settings.hour12) {
       setText(el.ampm, meridiem(h));
-      h = h % 12 || 12;
-      setText(el.hh, String(h));
+      setDigits(el.hh, String(h % 12 || 12));
     } else {
       setText(el.ampm, '');
-      setText(el.hh, pad2(h));
+      setDigits(el.hh, pad2(h));
     }
-    setText(el.mm, pad2(n.m));
+    setDigits(el.mm, pad2(n.m));
     setText(el.ss, pad2(n.s));
+    updateAnalog(n);
 
     if (n.m !== lastMinute) {
       lastMinute = n.m;
@@ -339,7 +499,7 @@
   }
 
   /* ==========================================================================
-     Tema
+     Tema y aspecto
      ========================================================================== */
   function resolvedTheme() {
     if (settings.theme === 'light' || settings.theme === 'dark') return settings.theme;
@@ -360,6 +520,16 @@
     if (el.metaTheme) el.metaTheme.setAttribute('content', mode === 'light' ? '#eef2f8' : '#05070f');
     el.themeIcon.innerHTML = THEME_ICONS[settings.theme] || THEME_ICONS.auto;
     if (window.Scenes) Scenes.setMode(mode);
+  }
+
+  /* Estilo, fuente y color del reloj; diseño y fuente de los widgets; vidrio */
+  function applyLook() {
+    root.setAttribute('data-clock-style', settings.clockStyle);
+    root.setAttribute('data-clock-font', settings.clockFont);
+    root.setAttribute('data-clock-color', settings.clockColor);
+    root.setAttribute('data-widget-style', settings.widgetStyle);
+    root.setAttribute('data-widget-font', settings.widgetFont);
+    root.setAttribute('data-glass', settings.glass);
   }
 
   function updateDayNight() {
@@ -393,10 +563,8 @@
     eachNode('[data-i18n-title]', function (n) { n.setAttribute('title', t(n.getAttribute('data-i18n-title'))); });
     eachNode('[data-i18n-aria]', function (n) { n.setAttribute('aria-label', t(n.getAttribute('data-i18n-aria'))); });
     eachNode('[data-i18n-ph]', function (n) { n.setAttribute('placeholder', t(n.getAttribute('data-i18n-ph'))); });
-    buildBgChips();
-    syncChips();
+    buildPanelOptions();
     renderLocation();
-    if (!state.weather) setText(el.nowDesc, t('loadingWeather'));
     lastMinute = -1;
     tick();
     renderWeather();
@@ -600,82 +768,171 @@
     rise: '<path d="M3.5 19h17M7 19a5 5 0 0 1 10 0M12 4.5v6M9 7.5l3-3 3 3"/>',
     set: '<path d="M3.5 19h17M7 19a5 5 0 0 1 10 0M12 4.5v6M9 7.5l3 3 3-3"/>'
   };
-  function stat(icon, k, v) {
-    return '<li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true">' + STAT_ICONS[icon] + '</svg><span><span class="k">' + k + '</span><span class="v">' + v + '</span></span></li>';
+  function statIcon(icon, inline) {
+    return '<svg class="ico' + (inline ? ' ico-inline' : '') + '" viewBox="0 0 24 24" aria-hidden="true">' + STAT_ICONS[icon] + '</svg>';
   }
 
   /* ==========================================================================
-     Clima
+     Clima: datos y diseños de widgets
      ========================================================================== */
-  function renderWeather() {
+  function weatherData() {
     var w = state.weather;
-    if (!w || !w.current || !w.daily) return;
+    if (!w || !w.current || !w.daily) return null;
     var c = w.current, d = w.daily, hr = w.hourly;
     var n = localNow(), today = dateKey(n);
     var di = d.time.indexOf(today);
     if (di < 0) di = 0;
     var info = wmo(c.weather_code);
     var day = state.isDay !== null ? state.isDay : !!c.is_day;
-    var windUnit = settings.unit === 'f' ? ' mph' : ' km/h';
-
-    el.nowIcon.innerHTML = weatherIcon(info.icon, day);
-    setText(el.nowTemp, round(c.temperature_2m) + '°');
-    setText(el.nowDesc, info.text);
-    setText(el.nowSub, t('hiLoFeels', round(d.temperature_2m_max[di]), round(d.temperature_2m_min[di]), round(c.apparent_temperature)));
-
     var pp = d.precipitation_probability_max ? d.precipitation_probability_max[di] : null;
     var uv = d.uv_index_max ? d.uv_index_max[di] : null;
-    el.stats.innerHTML =
-      stat('hum', t('humidity'), round(c.relative_humidity_2m) + '%') +
-      stat('wind', t('wind'), round(c.wind_speed_10m) + windUnit) +
-      stat('rain', t('rain'), (pp === null || pp === undefined ? '—' : round(pp) + '%')) +
-      stat('uv', t('uv'), round(uv)) +
-      stat('rise', t('sunrise'), fmtIsoTime(d.sunrise[di])) +
-      stat('set', t('sunset'), fmtIsoTime(d.sunset[di]));
-
-    // próximas horas
-    var html = '';
+    var D = {
+      icon: weatherIcon(info.icon, day),
+      temp: round(c.temperature_2m),
+      desc: info.text,
+      hi: round(d.temperature_2m_max[di]),
+      lo: round(d.temperature_2m_min[di]),
+      feels: round(c.apparent_temperature),
+      stats: [
+        { icon: 'hum', k: t('humidity'), v: round(c.relative_humidity_2m) + '%' },
+        { icon: 'wind', k: t('wind'), v: round(c.wind_speed_10m) + (settings.unit === 'f' ? ' mph' : ' km/h') },
+        { icon: 'rain', k: t('rain'), v: pp === null || pp === undefined ? '—' : round(pp) + '%' },
+        { icon: 'uv', k: t('uv'), v: round(uv) },
+        { icon: 'rise', k: t('sunrise'), v: fmtIsoTime(d.sunrise[di]) },
+        { icon: 'set', k: t('sunset'), v: fmtIsoTime(d.sunset[di]) }
+      ],
+      hours: [],
+      days: []
+    };
     if (hr && hr.time) {
       var start = hr.time.indexOf(today + 'T' + pad2(n.h) + ':00');
       if (start < 0) start = 0;
       for (var i = start; i < Math.min(start + 8, hr.time.length); i++) {
-        var hi = wmo(hr.weather_code[i]);
-        var hh = parseInt(hr.time[i].split('T')[1], 10);
         var p = hr.precipitation_probability ? hr.precipitation_probability[i] : null;
-        html += '<div class="hour' + (i === start ? ' now-h' : '') + '">' +
-          '<span class="t">' + (i === start ? t('now') : fmtHour(hh)) + '</span>' +
-          '<span class="i">' + weatherIcon(hi.icon, hr.is_day ? !!hr.is_day[i] : true) + '</span>' +
-          '<span class="v">' + round(i === start ? c.temperature_2m : hr.temperature_2m[i]) + '°</span>' +
-          '<span class="p">' + (p >= 20 ? p + '%' : '') + '</span></div>';
+        D.hours.push({
+          label: i === start ? t('now') : fmtHour(parseInt(hr.time[i].split('T')[1], 10)),
+          now: i === start,
+          icon: weatherIcon(wmo(hr.weather_code[i]).icon, hr.is_day ? !!hr.is_day[i] : true),
+          temp: round(i === start ? c.temperature_2m : hr.temperature_2m[i]),
+          p: p >= 20 ? p + '%' : ''
+        });
       }
     }
-    el.hours.innerHTML = html;
-
-    // próximos días
-    html = '';
     for (var j = di; j < Math.min(di + 6, d.time.length); j++) {
-      var dj = wmo(d.weather_code[j]);
       var parts = d.time[j].split('-');
       var wd = new Date(Date.UTC(+parts[0], +parts[1] - 1, +parts[2])).getUTCDay();
       var pj = d.precipitation_probability_max ? d.precipitation_probability_max[j] : null;
-      html += '<div class="day' + (j === di ? ' today' : '') + '">' +
-        '<span class="t">' + (j === di ? t('today') : t('daysShort')[wd]) + '</span>' +
-        '<span class="i">' + weatherIcon(dj.icon, true) + '</span>' +
-        '<span class="v">' + round(d.temperature_2m_max[j]) + '°<small>' + round(d.temperature_2m_min[j]) + '°</small></span>' +
-        '<span class="p">' + (pj >= 30 ? pj + '%' : '') + '</span></div>';
+      D.days.push({
+        label: j === di ? t('today') : t('daysShort')[wd],
+        today: j === di,
+        icon: weatherIcon(wmo(d.weather_code[j]).icon, true),
+        hi: round(d.temperature_2m_max[j]), lo: round(d.temperature_2m_min[j]),
+        hiN: d.temperature_2m_max[j], loN: d.temperature_2m_min[j],
+        p: pj >= 30 ? pj + '%' : ''
+      });
     }
-    el.days.innerHTML = html;
+    return D;
+  }
+
+  function nowMainHtml(D) {
+    return '<div class="now-main"><div class="now-icon">' + D.icon + '</div><div class="now-text">' +
+      '<div class="now-temp">' + D.temp + '°</div><div class="now-desc">' + esc(D.desc) + '</div></div></div>';
+  }
+  function statsHtml(D) {
+    return '<ul class="stats">' + D.stats.map(function (s) {
+      return '<li>' + statIcon(s.icon) + '<span><span class="k">' + esc(s.k) + '</span><span class="v">' + esc(s.v) + '</span></span></li>';
+    }).join('') + '</ul>';
+  }
+  function hoursHtml(D, n) {
+    return '<div class="hours">' + D.hours.slice(0, n).map(function (h) {
+      return '<div class="hour' + (h.now ? ' now-h' : '') + '"><span class="t">' + esc(h.label) + '</span><span class="i">' + h.icon +
+        '</span><span class="v">' + h.temp + '°</span><span class="p">' + h.p + '</span></div>';
+    }).join('') + '</div>';
+  }
+  function daysRowHtml(D) {
+    return '<div class="days">' + D.days.map(function (d) {
+      return '<div class="day' + (d.today ? ' today' : '') + '"><span class="t">' + esc(d.label) + '</span><span class="i">' + d.icon +
+        '</span><span class="v">' + d.hi + '°<small>' + d.lo + '°</small></span><span class="p">' + d.p + '</span></div>';
+    }).join('') + '</div>';
+  }
+  /* Lista vertical con barra de rango de temperatura (como en iOS) */
+  function daysListHtml(D) {
+    var min = Infinity, max = -Infinity;
+    D.days.forEach(function (d) {
+      if (typeof d.loN === 'number') min = Math.min(min, d.loN);
+      if (typeof d.hiN === 'number') max = Math.max(max, d.hiN);
+    });
+    var span = Math.max(1, max - min);
+    return '<div class="dlist">' + D.days.map(function (d) {
+      var bar = '';
+      if (typeof d.loN === 'number' && typeof d.hiN === 'number') {
+        var width = Math.max(6, (d.hiN - d.loN) / span * 100), left = Math.max(0, (d.loN - min) / span * 100);
+        if (left + width > 100) left = 100 - width;
+        // el degradado se estira a todo el riel: cada barra muestra los colores de su rango de temperatura
+        var pos = width >= 100 ? 0 : left / (100 - width) * 100;
+        bar = '<i style="left:' + left.toFixed(1) + '%;width:' + width.toFixed(1) + '%;background-size:' + (10000 / width).toFixed(1) +
+          '% 100%;background-position:' + pos.toFixed(1) + '% 0"></i>';
+      }
+      return '<div class="row' + (d.today ? ' today' : '') + '"><span class="t">' + esc(d.label) + '</span><span class="i">' + d.icon +
+        '</span><span class="p">' + d.p + '</span><span class="lo">' + d.lo + '°</span><span class="bar">' + bar +
+        '</span><span class="hi">' + d.hi + '°</span></div>';
+    }).join('') + '</div>';
+  }
+
+  var LAYOUTS = {
+    full: function (D) {
+      return '<article class="glass card now">' + nowMainHtml(D) +
+        '<div class="now-sub">' + esc(t('hiLoFeels', D.hi, D.lo, D.feels)) + '</div>' + statsHtml(D) + '</article>' +
+        '<article class="glass card forecast"><h3 class="label">' + esc(t('nextHours')) + '</h3>' + hoursHtml(D, 8) +
+        '<div class="divider"></div><h3 class="label">' + esc(t('nextDays')) + '</h3>' + daysRowHtml(D) + '</article>';
+    },
+    compact: function (D) {
+      return '<article class="glass card now">' + nowMainHtml(D) +
+        '<div class="now-sub">' + esc(t('hiLo', D.hi, D.lo)) + '<br>' + esc(t('feels', D.feels)) + '</div></article>';
+    },
+    side: function (D) {
+      return '<div class="side-col"><article class="glass card now">' + nowMainHtml(D) +
+        '<div class="now-sub">' + esc(t('hiLoFeels', D.hi, D.lo, D.feels)) + '</div>' + statsHtml(D) + '</article>' +
+        '<article class="glass card forecast"><h3 class="label lh">' + esc(t('nextHours')) + '</h3>' + hoursHtml(D, 6) +
+        '<div class="divider"></div><h3 class="label">' + esc(t('nextDays')) + '</h3>' + daysListHtml(D) + '</article></div>';
+    },
+    tiles: function (D) {
+      var html = '<div class="bento"><article class="glass tile t-now">' + nowMainHtml(D) +
+        '<div class="now-sub">' + esc(t('hiLo', D.hi, D.lo)) + ' · ' + statIcon('rise', true) + esc(D.stats[4].v) +
+        ' ' + statIcon('set', true) + esc(D.stats[5].v) + '</div></article>';
+      for (var i = 0; i < 4; i++) {
+        var s = D.stats[i];
+        html += '<article class="glass tile t-stat"><span class="k">' + statIcon(s.icon) + esc(s.k) + '</span><span class="v">' + esc(s.v) + '</span></article>';
+      }
+      D.days.forEach(function (d) {
+        html += '<article class="glass tile t-day' + (d.today ? ' today' : '') + '"><span class="t">' + esc(d.label) + '</span><span class="i">' + d.icon +
+          '</span><span class="v">' + d.hi + '°<small>' + d.lo + '°</small></span></article>';
+      });
+      return html + '</div>';
+    }
+  };
+
+  function renderWeather() {
+    var style = settings.widgetStyle;
+    if (style === 'hidden') { el.weather.innerHTML = ''; return; }
+    var D = weatherData();
+    if (!D) {
+      el.weather.innerHTML = '<article class="glass card now loading"><div class="now-desc">' + esc(t('loadingWeather')) + '</div></article>';
+      return;
+    }
+    el.weather.innerHTML = (LAYOUTS[style] || LAYOUTS.full)(D);
   }
 
   var statusKey = '';   // clave del mensaje de estado, para poder traducirlo
   function renderStatus() {
-    var w = state.weather, txt = '';
-    if (statusKey) txt = t(statusKey);
+    var w = state.weather, parts = [];
+    if (statusKey) parts.push(t(statusKey));
     else if (w && w.fetchedAt) {
       var mins = Math.round((Date.now() - w.fetchedAt) / 60000);
-      txt = mins < 1 ? t('updatedNow') : mins < 60 ? t('updatedMin', mins) : t('updatedH', Math.round(mins / 60));
+      parts.push(mins < 1 ? t('updatedNow') : mins < 60 ? t('updatedMin', mins) : t('updatedH', Math.round(mins / 60)));
     }
-    setText(el.status, (txt ? txt + ' · ' : '') + t('weatherCredit'));
+    if (t('weatherCredit')) parts.push(t('weatherCredit'));
+    setText(el.status, parts.join(' · ') || ' ');
   }
 
   var weatherTimer = 0, weatherReq = 0;
@@ -720,6 +977,7 @@
     lastHour = -1;
     state.isDay = computeIsDay();
     applyTheme();
+    resetHands();
     tick();
     renderWeather();
     if (settings.bg === 'auto' && autoScene() !== hadAuto) applyBackground();
@@ -860,27 +1118,77 @@
             esc(c.name) + (region ? '<small>' + esc(region) + '</small>' : '') + '</button>';
         }).join('');
         var first = el.results.querySelector('button');
-        if (first && root.className.indexOf('using-keys') >= 0) first.focus();
+        if (first && root.className.indexOf('using-keys') >= 0) focusEl(first);
       }, function () {
         el.results.innerHTML = '<p class="empty">' + esc(t('searchOffline')) + '</p>';
       });
   }
 
   /* ==========================================================================
-     Ajustes
+     Ajustes: opciones con vista previa
      ========================================================================== */
   function chip(attrs, label, swatch) {
     return '<button class="chip" type="button" ' + attrs + '>' +
       (swatch ? '<span class="sw" style="background:' + swatch + '"></span>' : '') + esc(label) + '</button>';
   }
+  function pick(key, value, preview, label) {
+    return '<button class="pick" type="button" data-set="' + key + '" data-value="' + value + '"><span class="pv">' + preview +
+      '</span><span class="pick-label">' + esc(label) + '</span></button>';
+  }
 
-  function buildBgChips() {
-    var html = chip('data-set="bg" data-value="auto"', t('auto'), 'conic-gradient(#ffd56b,#7cc4e4,#5a6b8c,#ffd56b)');
+  var MINI_ANALOG = '<svg class="pv-analog" viewBox="0 0 40 40"><circle class="f" cx="20" cy="20" r="18"/>' +
+    '<line x1="20" y1="20" x2="20" y2="9" stroke-width="2.4"/><line x1="20" y1="20" x2="28" y2="23" stroke-width="2.4"/>' +
+    '<line x1="20" y1="22" x2="13" y2="9" stroke-width="1" style="stroke:var(--hand-accent)"/></svg>';
+  var CLOCK_PREVIEWS = {
+    classic: '<span class="ck pv-card">12:45</span>',
+    floating: '<span class="ck pv-txt">12:45</span>',
+    stacked: '<span class="ck pv-stack">12<br>45</span>',
+    analog: MINI_ANALOG,
+    flip: '<span class="ck pv-flip"><i>1</i><i>2</i><b>:</b><i>4</i><i>5</i></span>',
+    neon: '<span class="ck pv-neon">12:45</span>'
+  };
+  /* Esquemas de los diseños de widgets: b = bloque de vidrio [izq, arriba, ancho, alto, píldora] */
+  function blocks(list) {
+    return list.map(function (b) {
+      return '<i class="b" style="left:' + b[0] + '%;top:' + b[1] + '%;width:' + b[2] + '%;height:' + b[3] + '%' + (b[4] ? ';border-radius:99px' : '') + '"></i>';
+    }).join('');
+  }
+  function miniClock(left, top, size) {
+    return '<span class="ck mini" style="left:' + left + '%;top:' + top + '%;font-size:' + size + 'rem">12:45</span>';
+  }
+  var WIDGET_PREVIEWS = {
+    full: miniClock(31, 12, 1.15) + blocks([[6, 56, 30, 34], [40, 56, 54, 34]]),
+    compact: miniClock(26, 16, 1.45) + blocks([[28, 66, 44, 18, 1]]),
+    side: miniClock(8, 38, 1.15) + blocks([[60, 10, 34, 80]]),
+    tiles: miniClock(31, 8, 1.1) + blocks([[6, 44, 28, 21], [37, 44, 12, 21], [52, 44, 12, 21], [67, 44, 12, 21], [82, 44, 12, 21],
+      [6, 70, 12, 21], [21, 70, 12, 21], [36, 70, 12, 21], [51, 70, 12, 21], [66, 70, 12, 21], [81, 70, 13, 21]]),
+    hidden: miniClock(17, 30, 2)
+  };
+
+  function buildPanelOptions() {
+    // fondo
+    var html = chip('data-set="bg" data-value="auto"', t('auto'), 'linear-gradient(135deg,#ffd56b,#7cc4e4 50%,#5a6b8c)');
     Scenes.list.forEach(function (s) { html += chip('data-set="bg" data-value="' + s.id + '"', t('scene_' + s.id), s.swatch); });
     el.sceneChips.innerHTML = html;
     html = '';
     videoList().forEach(function (v) { html += chip('data-set="bg" data-value="' + v.id + '"', localized(v.name), v.swatch); });
     el.videoChips.innerHTML = html;
+
+    // reloj
+    el.clockStyles.innerHTML = CLOCK_STYLES.map(function (s) { return pick('clockStyle', s, CLOCK_PREVIEWS[s], t('cstyle_' + s)); }).join('');
+    el.clockFonts.innerHTML = FONTS.map(function (f) {
+      return pick('clockFont', f.id, '<span class="pv-font" style="font-family:' + f.family + ';font-weight:' + f.w + '">12:45</span>', localized(f.name));
+    }).join('');
+    el.clockColors.innerHTML = CLOCK_COLORS.map(function (c) { return chip('data-set="clockColor" data-value="' + c.id + '"', t('color_' + c.id), c.sw); }).join('');
+
+    // widgets
+    el.widgetStyles.innerHTML = WIDGET_STYLES.map(function (s) { return pick('widgetStyle', s, WIDGET_PREVIEWS[s], t('wstyle_' + s)); }).join('');
+    el.widgetFonts.innerHTML = FONTS.map(function (f) {
+      return pick('widgetFont', f.id, '<span class="pv-font" style="font-family:' + f.family + ';font-weight:' + f.ww + '">23°</span>' +
+        '<span class="pv-sub" style="font-family:' + f.family + '">' + esc(t('wmo')[0]) + '</span>', localized(f.name));
+    }).join('');
+
+    syncChips();
   }
 
   function syncChips() {
@@ -893,7 +1201,7 @@
   function parseValue(v) { return v === 'true' ? true : v === 'false' ? false : v; }
 
   function setSetting(key, value) {
-    if (key === 'lang' && !I18N[value]) value = 'es';
+    if (!isValid(key, value)) return;
     var changed = settings[key] !== value;
     settings[key] = value;
     store.set(key, value);
@@ -905,52 +1213,83 @@
       case 'bg': applyBackground(); break;
       case 'hour12': lastMinute = -1; tick(); renderWeather(); break;
       case 'seconds': body.classList.toggle('no-seconds', !value); break;
-      case 'forecast': body.classList.toggle('minimal', !value); break;
       case 'unit': fetchWeather(); break;
       case 'quality': root.setAttribute('data-quality', value); Scenes.setQuality(value); break;
-      case 'customVideo': buildBgChips(); break;
+      case 'customVideo': buildPanelOptions(); break;
+      case 'clockStyle': applyLook(); resetHands(); tick(); measureDigits(); break;
+      case 'clockFont': applyLook(); measureWhenFontReady(); break;
+      case 'clockColor': case 'glass': case 'widgetFont': applyLook(); break;
+      case 'widgetStyle': applyLook(); renderWeather(); break;
     }
     syncChips();
   }
 
   /* Ajustes desde la URL, útil para guardar un favorito en la TV:
-     ?lang=en&bg=v-olas&theme=dark&forecast=false */
+     ?lang=en&bg=v-olas&clockStyle=flip&widgetStyle=side */
   function readUrlParams() {
     var q = location.search.replace(/^\?/, '');
     if (!q) return;
     q.split('&').forEach(function (pair) {
-      var kv = pair.split('='), k = decodeURIComponent(kv[0] || ''), v = decodeURIComponent((kv[1] || '').replace(/\+/g, ' '));
-      if (!(k in settings) || k === 'customVideo') return;
-      if (k === 'lang' && !I18N[v]) return;
-      settings[k] = parseValue(v);
-      store.set(k, settings[k]);
+      var kv = pair.split('='), k = decodeURIComponent(kv[0] || ''), v = parseValue(decodeURIComponent((kv[1] || '').replace(/\+/g, ' ')));
+      if (k === 'forecast') { k = 'widgetStyle'; v = v === false ? 'compact' : 'full'; }
+      if (!(k in settings) || k === 'customVideo' || !isValid(k, v)) return;
+      settings[k] = v;
+      store.set(k, v);
     });
   }
 
-  /* ---------- panel ---------- */
-  var panelOpen = false, lastFocus = null, closeTimer = 0;
-  function openPanel(sectionId) {
+  /* ---------- panel con pestañas ---------- */
+  var panelOpen = false, lastFocus = null, closeTimer = 0, currentTab = 'appearance', savedScroll = 0;
+
+  function selectTab(id) {
+    if (!el.panel.querySelector('[data-pane="' + id + '"]')) id = 'appearance';
+    var changed = id !== currentTab;
+    currentTab = id;
+    toArray(el.panel.querySelectorAll('.tab')).forEach(function (b) {
+      b.setAttribute('aria-selected', b.getAttribute('data-tab') === id ? 'true' : 'false');
+    });
+    toArray(el.panel.querySelectorAll('.pane')).forEach(function (p) { p.hidden = p.getAttribute('data-pane') !== id; });
+    // al cambiar de pestaña, volver arriba si el panel quedó desplazado
+    if (changed && el.panel.getBoundingClientRect().top < 0) window.scrollTo(0, 0);
+  }
+  function activeTab() { return el.panel.querySelector('.tab[data-tab="' + currentTab + '"]'); }
+  function paneEntry() {
+    var pane = el.panel.querySelector('[data-pane="' + currentTab + '"]');
+    return pane.querySelector('[aria-pressed="true"]') || pane.querySelector('button, input');
+  }
+
+  function openPanel(tab) {
     clearTimeout(closeTimer);
+    if (!panelOpen) {
+      // la página de fondo se queda quieta y el panel usa el desplazamiento de la página
+      savedScroll = window.pageYOffset || document.documentElement.scrollTop || 0;
+      el.stage.style.top = -savedScroll + 'px';
+      body.classList.add('panel-open');
+      lastFocus = document.activeElement;
+    }
     panelOpen = true;
-    lastFocus = document.activeElement;
+    selectTab(tab || currentTab);
     syncChips();
     renderLocation();
     el.overlay.hidden = false;
+    window.scrollTo(0, 0);
     // forzar reflow para que se vea la transición
     void el.overlay.offsetWidth;
     el.overlay.className = 'overlay open';
     body.classList.remove('idle');
-    var section = sectionId ? $(sectionId) : null;
-    var target = (section || el.panel).querySelector('[aria-pressed="true"]') || (section || el.panel).querySelector('button');
-    if (section) el.panelBody.scrollTop = section.offsetTop - 12;
-    else el.panelBody.scrollTop = 0;
-    if (target) setTimeout(function () { target.focus(); }, 60);
+    var target = activeTab();
+    setTimeout(function () { if (target && panelOpen) focusEl(target); }, 60);
   }
   function closePanel() {
     if (!panelOpen) return;
     panelOpen = false;
     el.overlay.className = 'overlay';
-    closeTimer = setTimeout(function () { el.overlay.hidden = true; }, 320);
+    closeTimer = setTimeout(function () {
+      el.overlay.hidden = true;
+      body.classList.remove('panel-open');
+      el.stage.style.top = '';
+      window.scrollTo(0, savedScroll);
+    }, 320);
     if (lastFocus && lastFocus.focus) lastFocus.focus();
     wake();
   }
@@ -1007,7 +1346,7 @@
   });
 
   /* ==========================================================================
-     Controles: ocultar al estar inactivo, foco con control remoto
+     Controles: ocultar al estar inactivo, foco y desplazamiento con control remoto
      ========================================================================== */
   var idleTimer = 0;
   function wake() {
@@ -1016,6 +1355,17 @@
     idleTimer = setTimeout(function () {
       if (!panelOpen) body.classList.add('idle');
     }, 5000);
+  }
+
+  function viewportH() { return window.innerHeight || document.documentElement.clientHeight; }
+  function scrollPage(dy) { window.scrollBy(0, dy); }
+
+  /* Enfoca y se asegura de que el elemento quede visible con margen (hay TVs que no desplazan solas) */
+  function focusEl(node) {
+    node.focus();
+    var r = node.getBoundingClientRect(), vh = viewportH(), m = Math.min(120, vh * 0.12);
+    if (r.bottom > vh - m) scrollPage(r.bottom - vh + m);
+    else if (r.top < m) scrollPage(r.top - m);
   }
 
   function isVisible(node) {
@@ -1034,8 +1384,7 @@
     if (!items.length) return;
     var cur = document.activeElement;
     if (items.indexOf(cur) < 0) {
-      var start = panelOpen ? (el.panel.querySelector('[aria-pressed="true"]') || items[0]) : el.toolbar.querySelector('button');
-      start.focus();
+      focusEl(panelOpen ? activeTab() : el.toolbar.querySelector('button'));
       return;
     }
     var a = cur.getBoundingClientRect(), ax = a.left + a.width / 2, ay = a.top + a.height / 2;
@@ -1059,7 +1408,14 @@
       var score = Math.max(main, 0) + cross * (overlap ? 0.3 : 2.5) + (overlap ? 0 : 40);
       if (score < bestScore) { bestScore = score; best = node; }
     }
-    if (best) best.focus();
+    if (panelOpen && best) {
+      // de las opciones a las pestañas: siempre a la pestaña activa; y al revés, a la opción elegida
+      var curTab = hasClass(cur, 'tab'), bestTab = hasClass(best, 'tab');
+      if (!curTab && bestTab) best = activeTab();
+      else if (curTab && !bestTab && closest(best, '.pane')) best = paneEntry() || best;
+    }
+    if (best) focusEl(best);
+    else if (dir === 'down' || dir === 'up') scrollPage((dir === 'down' ? 1 : -1) * viewportH() * 0.4);
   }
 
   function keyDir(e) {
@@ -1084,6 +1440,10 @@
       if (panelOpen) { e.preventDefault(); closePanel(); }
       return;
     }
+
+    // Re Pág / Av Pág y CH+ / CH− del control (LG los envía como Re/Av Pág; Samsung como 427/428)
+    if (c === 33 || c === 427 || k === 'PageUp' || k === 'ChannelUp') { e.preventDefault(); scrollPage(-viewportH() * 0.8); return; }
+    if (c === 34 || c === 428 || k === 'PageDown' || k === 'ChannelDown') { e.preventDefault(); scrollPage(viewportH() * 0.8); return; }
 
     var active = document.activeElement;
     var typing = active && active.tagName === 'INPUT';
@@ -1115,16 +1475,17 @@
   });
 
   /* Reflejo del vidrio que sigue al puntero */
-  var glassEls = toArray(document.querySelectorAll('.glass')), pointer = null, pointerRaf = 0;
+  var pointer = null, pointerRaf = 0;
   document.addEventListener('mousemove', function (e) {
     pointer = e;
     if (!pointerRaf) pointerRaf = requestAnimationFrame(function () {
       pointerRaf = 0;
-      for (var i = 0; i < glassEls.length; i++) {
-        var r = glassEls[i].getBoundingClientRect();
+      var list = document.querySelectorAll('.glass');
+      for (var i = 0; i < list.length; i++) {
+        var r = list[i].getBoundingClientRect();
         if (!r.width) continue;
-        glassEls[i].style.setProperty('--mx', ((pointer.clientX - r.left) / r.width * 100).toFixed(1) + '%');
-        glassEls[i].style.setProperty('--my', ((pointer.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+        list[i].style.setProperty('--mx', ((pointer.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+        list[i].style.setProperty('--my', ((pointer.clientY - r.top) / r.height * 100).toFixed(1) + '%');
       }
     });
   });
@@ -1145,12 +1506,13 @@
 
   /* ---------- clics ---------- */
   document.addEventListener('click', function (e) {
-    var target = closest(e.target, '[data-action], [data-set], [data-city], #locBtn');
+    var target = closest(e.target, '[data-action], [data-set], [data-city], [data-tab], #locBtn');
     if (!target) {
-      if (panelOpen && e.target === el.overlay) closePanel();
+      if (panelOpen && !closest(e.target, '.panel')) closePanel();
       return;
     }
-    if (target.id === 'locBtn') { openPanel('secLoc'); return; }
+    if (target.id === 'locBtn') { openPanel('location'); return; }
+    if (target.hasAttribute('data-tab')) { selectTab(target.getAttribute('data-tab')); return; }
     if (target.hasAttribute('data-set')) {
       setSetting(target.getAttribute('data-set'), parseValue(target.getAttribute('data-value')));
       return;
@@ -1175,6 +1537,11 @@
     }
   });
 
+  /* Con el control remoto, llegar a una pestaña ya la abre (no hace falta pulsar OK) */
+  el.panel.addEventListener('focus', function (e) {
+    if (hasClass(e.target, 'tab')) selectTab(e.target.getAttribute('data-tab'));
+  }, true);
+
   el.searchForm.addEventListener('submit', function (e) {
     e.preventDefault();
     var q = el.searchInput.value.replace(/^\s+|\s+$/g, '');
@@ -1194,8 +1561,8 @@
   /* Protección contra marcas en pantallas OLED: el contenido se mueve unos píxeles */
   setInterval(function () {
     if (panelOpen) return;
-    var x = Math.round((Math.random() - 0.5) * 12), y = Math.round((Math.random() - 0.5) * 10);
-    el.stage.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+    el.stage.style.setProperty('--sx', Math.round((Math.random() - 0.5) * 12) + 'px');
+    el.stage.style.setProperty('--sy', Math.round((Math.random() - 0.5) * 10) + 'px');
   }, 120000);
 
   if (window.matchMedia) {
@@ -1204,18 +1571,22 @@
     if (mq.addEventListener) mq.addEventListener('change', onScheme); else if (mq.addListener) mq.addListener(onScheme);
   }
 
+  // cuando termina de cargar una fuente, volver a medir los dígitos
+  if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', measureDigits);
+
   /* ==========================================================================
      Inicio
      ========================================================================== */
   function boot() {
     readUrlParams();
-    if (!I18N[settings.lang]) settings.lang = 'es';
     root.setAttribute('data-quality', settings.quality);
     body.classList.toggle('no-seconds', !settings.seconds);
-    body.classList.toggle('minimal', !settings.forecast);
+    applyLook();
     Scenes.init(el.canvas);
     Scenes.setQuality(settings.quality);
+    buildAnalog();
     applyLanguage();
+    selectTab(currentTab);
 
     // datos guardados para mostrar algo al instante
     var cached = store.get('weather', null);
@@ -1225,6 +1596,7 @@
       applyTheme();
       tick();
     }
+    measureWhenFontReady();
     applyBackground();
     renderStatus();
     onFsChange();
