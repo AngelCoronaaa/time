@@ -547,6 +547,7 @@ body.minimal .time { font-size: 25vmin; }
   color: var(--text-3);
 }
 .hint, .panel-foot { margin: .3rem 0 0; font-size: .85rem; color: var(--text-3); line-height: 1.5; }
+.hint + h4 { margin-top: 1.2rem; }
 .panel-foot { margin-top: 1.2rem; }
 kbd {
   font: inherit;

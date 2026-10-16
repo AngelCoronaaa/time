@@ -10,25 +10,158 @@
   /* --------------------------------------------------------------------------
      Videos de fondo (Mixkit, licencia gratuita). Puedes añadir los tuyos, por
      ejemplo un archivo en la carpeta videos/:
-       { id: 'v-mio', name: 'Mi video', src: 'videos/mi-video.mp4', swatch: '#345' }
+       { id: 'v-mio', name: { es: 'Mi video', en: 'My video' }, src: 'videos/mi-video.mp4', swatch: '#345' }
      -------------------------------------------------------------------------- */
   function mixkit(id) { return 'https://assets.mixkit.co/videos/' + id + '/' + id + '-720.mp4'; }
   var VIDEOS = [
-    { id: 'v-olas', name: 'Olas en la playa', src: mixkit(5016), swatch: 'linear-gradient(180deg,#7cc4e4,#1f7fa8)' },
-    { id: 'v-atardecer', name: 'Atardecer en la playa', src: mixkit(44498), swatch: 'linear-gradient(180deg,#f7b267,#c0577a)' },
-    { id: 'v-lluvia-hojas', name: 'Lluvia en las hojas', src: mixkit(2206), swatch: 'linear-gradient(180deg,#5c8a4a,#1f3d2a)' },
-    { id: 'v-lluvia-lago', name: 'Lluvia en el lago', src: mixkit(18312), swatch: 'linear-gradient(180deg,#8aa0ad,#3b4f5c)' },
-    { id: 'v-cascada', name: 'Cascada en el bosque', src: mixkit(2213), swatch: 'linear-gradient(180deg,#9fd3c7,#2f6b4f)' },
-    { id: 'v-aurora', name: 'Aurora boreal', src: mixkit(4038), swatch: 'linear-gradient(180deg,#0b1d3a,#28c08a)' },
-    { id: 'v-estrellas', name: 'Estrellas sobre el lago', src: mixkit(1704), swatch: 'linear-gradient(180deg,#0a0f2c,#3b4a8a)' },
-    { id: 'v-nieve', name: 'Nieve en el bosque', src: mixkit(3352), swatch: 'linear-gradient(180deg,#dfe8f1,#7d93ad)' },
-    { id: 'v-chimenea', name: 'Chimenea', src: mixkit(2709), swatch: 'linear-gradient(180deg,#ffb347,#7a2e0e)' },
-    { id: 'v-nubes', name: 'Nubes', src: mixkit(2408), swatch: 'linear-gradient(180deg,#3f8fdc,#ffffff)' }
+    { id: 'v-olas', name: { es: 'Olas en la playa', en: 'Beach waves' }, src: mixkit(5016), swatch: 'linear-gradient(180deg,#7cc4e4,#1f7fa8)' },
+    { id: 'v-atardecer', name: { es: 'Atardecer en la playa', en: 'Beach sunset' }, src: mixkit(44498), swatch: 'linear-gradient(180deg,#f7b267,#c0577a)' },
+    { id: 'v-lluvia-hojas', name: { es: 'Lluvia en las hojas', en: 'Rain on leaves' }, src: mixkit(2206), swatch: 'linear-gradient(180deg,#5c8a4a,#1f3d2a)' },
+    { id: 'v-lluvia-lago', name: { es: 'Lluvia en el lago', en: 'Rain on the lake' }, src: mixkit(18312), swatch: 'linear-gradient(180deg,#8aa0ad,#3b4f5c)' },
+    { id: 'v-cascada', name: { es: 'Cascada en el bosque', en: 'Forest waterfall' }, src: mixkit(2213), swatch: 'linear-gradient(180deg,#9fd3c7,#2f6b4f)' },
+    { id: 'v-aurora', name: { es: 'Aurora boreal', en: 'Northern lights' }, src: mixkit(4038), swatch: 'linear-gradient(180deg,#0b1d3a,#28c08a)' },
+    { id: 'v-estrellas', name: { es: 'Estrellas sobre el lago', en: 'Stars over the lake' }, src: mixkit(1704), swatch: 'linear-gradient(180deg,#0a0f2c,#3b4a8a)' },
+    { id: 'v-nieve', name: { es: 'Nieve en el bosque', en: 'Snowy forest' }, src: mixkit(3352), swatch: 'linear-gradient(180deg,#dfe8f1,#7d93ad)' },
+    { id: 'v-chimenea', name: { es: 'Chimenea', en: 'Fireplace' }, src: mixkit(2709), swatch: 'linear-gradient(180deg,#ffb347,#7a2e0e)' },
+    { id: 'v-nubes', name: { es: 'Nubes', en: 'Clouds' }, src: mixkit(2408), swatch: 'linear-gradient(180deg,#3f8fdc,#ffffff)' }
   ];
 
-  var DAYS = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
-  var DAYS_SHORT = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
-  var MONTHS = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+  /* --------------------------------------------------------------------------
+     Textos de la interfaz (español / inglés)
+     -------------------------------------------------------------------------- */
+  var I18N = {
+    es: {
+      title: 'Calma — Reloj y clima',
+      days: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
+      daysShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+      months: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
+      am: 'a. m.', pm: 'p. m.',
+      now: 'Ahora', today: 'Hoy',
+      hiLoFeels: 'Máx {0}° · Mín {1}° · Sensación {2}°',
+      humidity: 'Humedad', wind: 'Viento', rain: 'Lluvia', uv: 'Índice UV', sunrise: 'Amanecer', sunset: 'Atardecer',
+      updatedNow: 'Actualizado hace un momento', updatedMin: 'Actualizado hace {0} min', updatedH: 'Actualizado hace {0} h',
+      weatherCredit: '',
+      gettingWeather: 'Obteniendo clima…',
+      offline: 'Sin conexión, mostrando datos guardados',
+      weatherFail: 'No se pudo cargar el clima, reintentando…',
+      loadingWeather: 'Cargando clima…',
+      findingLocation: 'Buscando ubicación…',
+      myLocation: 'Mi ubicación', approxLocation: 'Ubicación aproximada', noLocation: 'Sin ubicación', chooseCity: 'Elige tu ciudad',
+      src_gps: 'GPS', src_ip: 'Aproximada', src_manual: 'Elegida',
+      locating: 'Buscando tu ubicación…',
+      gpsDenied: 'Permiso de ubicación denegado. Usando ubicación aproximada.',
+      gpsUnavailable: 'GPS no disponible. Usando ubicación aproximada.',
+      locationIs: 'Ubicación: {0}',
+      locateFail: 'No se pudo detectar tu ubicación. Elígela en Ajustes.',
+      searching: 'Buscando…',
+      notFound: 'No encontré esa ciudad. Prueba con otro nombre.',
+      searchOffline: 'Sin conexión. Inténtalo de nuevo.',
+      videoFail: 'No se pudo cargar el video. Mostrando una animación.',
+      bgIs: 'Fondo: {0}',
+      autoBg: 'Automático (según el clima)',
+      myVideo: 'Mi video',
+      themeToast_auto: 'Tema automático (día/noche)', themeToast_light: 'Modo claro', themeToast_dark: 'Modo oscuro',
+      fsIos: 'En iPhone/iPad: toca Compartir → "Agregar a inicio" y ábrela desde ahí, sin barra de URL.',
+      fsUnsupported: 'Este navegador no permite pantalla completa. Busca la opción en el menú del navegador.',
+      fsBlocked: 'El navegador bloqueó la pantalla completa.',
+      badVideo: 'Pega un enlace a un video (.mp4 o .webm)',
+      langToast: 'Idioma: Español',
+      scene_aurora: 'Aurora', scene_ocean: 'Océano', scene_clouds: 'Cielo', scene_rain: 'Lluvia',
+      scene_snow: 'Nieve', scene_stars: 'Noche estrellada', scene_fireflies: 'Luciérnagas',
+      // textos fijos del HTML (data-i18n)
+      changeLocation: 'Cambiar ubicación',
+      controls: 'Controles',
+      changeBg: 'Cambiar fondo', changeBgKey: 'Cambiar fondo (B)',
+      changeTheme: 'Cambiar tema', changeThemeKey: 'Modo claro / oscuro (T)',
+      fullscreen: 'Pantalla completa', fullscreenKey: 'Pantalla completa (F)',
+      settings: 'Ajustes', settingsKey: 'Ajustes (S)', closeSettings: 'Cerrar ajustes',
+      nextHours: 'Próximas horas', nextDays: 'Próximos días',
+      appearance: 'Apariencia', theme: 'Tema', light: 'Claro', dark: 'Oscuro', auto: 'Automático',
+      themeHint: 'Automático usa modo claro de día y oscuro al anochecer en tu ciudad.',
+      language: 'Idioma',
+      background: 'Fondo', animations: 'Animaciones', videos: 'Videos',
+      videoPh: 'O pega la URL de un video .mp4', use: 'Usar',
+      location: 'Ubicación', useMyLocation: 'Usar mi ubicación actual', searchPh: 'Buscar otra ciudad…', search: 'Buscar',
+      display: 'Pantalla', timeFormat: 'Formato de hora', seconds: 'Segundos', show: 'Mostrar', hide: 'Ocultar',
+      temperature: 'Temperatura', forecast: 'Pronóstico', clockOnly: 'Solo reloj',
+      performance: 'Rendimiento', highQuality: 'Alta calidad', eco: 'Ahorro (Smart TV)',
+      footHtml: 'Control remoto: flechas para moverte y OK para elegir. Teclado: <kbd>F</kbd> pantalla completa · <kbd>T</kbd> tema · <kbd>L</kbd> idioma · <kbd>B</kbd> fondo · <kbd>S</kbd> ajustes.',
+      wmo: {
+        0: 'Despejado', 1: 'Mayormente despejado', 2: 'Parcialmente nublado', 3: 'Nublado',
+        45: 'Niebla', 48: 'Niebla con escarcha',
+        51: 'Llovizna ligera', 53: 'Llovizna', 55: 'Llovizna intensa', 56: 'Llovizna helada', 57: 'Llovizna helada',
+        61: 'Lluvia ligera', 63: 'Lluvia', 65: 'Lluvia fuerte', 66: 'Lluvia helada', 67: 'Lluvia helada fuerte',
+        71: 'Nevada ligera', 73: 'Nevada', 75: 'Nevada fuerte', 77: 'Granizo fino',
+        80: 'Chubascos ligeros', 81: 'Chubascos', 82: 'Chubascos fuertes', 85: 'Chubascos de nieve', 86: 'Chubascos de nieve',
+        95: 'Tormenta', 96: 'Tormenta con granizo', 99: 'Tormenta con granizo'
+      }
+    },
+    en: {
+      title: 'Calma — Clock & weather',
+      days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      daysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+      months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      am: 'AM', pm: 'PM',
+      now: 'Now', today: 'Today',
+      hiLoFeels: 'High {0}° · Low {1}° · Feels like {2}°',
+      humidity: 'Humidity', wind: 'Wind', rain: 'Rain', uv: 'UV index', sunrise: 'Sunrise', sunset: 'Sunset',
+      updatedNow: 'Updated just now', updatedMin: 'Updated {0} min ago', updatedH: 'Updated {0} h ago',
+      weatherCredit: 'Weather: Open-Meteo.com',
+      gettingWeather: 'Getting the weather…',
+      offline: 'Offline, showing saved data',
+      weatherFail: "Couldn't load the weather, retrying…",
+      loadingWeather: 'Loading weather…',
+      findingLocation: 'Finding your location…',
+      myLocation: 'My location', approxLocation: 'Approximate location', noLocation: 'No location', chooseCity: 'Choose your city',
+      src_gps: 'GPS', src_ip: 'Approximate', src_manual: 'Chosen',
+      locating: 'Finding your location…',
+      gpsDenied: 'Location permission denied. Using an approximate location.',
+      gpsUnavailable: 'GPS unavailable. Using an approximate location.',
+      locationIs: 'Location: {0}',
+      locateFail: "Couldn't detect your location. Choose it in Settings.",
+      searching: 'Searching…',
+      notFound: "Couldn't find that city. Try another name.",
+      searchOffline: 'No connection. Please try again.',
+      videoFail: "Couldn't load the video. Showing an animation instead.",
+      bgIs: 'Background: {0}',
+      autoBg: 'Automatic (matches the weather)',
+      myVideo: 'My video',
+      themeToast_auto: 'Automatic theme (day/night)', themeToast_light: 'Light mode', themeToast_dark: 'Dark mode',
+      fsIos: 'On iPhone/iPad: tap Share → "Add to Home Screen" and open it from there, without the URL bar.',
+      fsUnsupported: "This browser doesn't support full screen. Look for the option in the browser menu.",
+      fsBlocked: 'The browser blocked full screen.',
+      badVideo: 'Paste a link to a video (.mp4 or .webm)',
+      langToast: 'Language: English',
+      scene_aurora: 'Aurora', scene_ocean: 'Ocean', scene_clouds: 'Sky', scene_rain: 'Rain',
+      scene_snow: 'Snow', scene_stars: 'Starry night', scene_fireflies: 'Fireflies',
+      changeLocation: 'Change location',
+      controls: 'Controls',
+      changeBg: 'Change background', changeBgKey: 'Change background (B)',
+      changeTheme: 'Change theme', changeThemeKey: 'Light / dark mode (T)',
+      fullscreen: 'Full screen', fullscreenKey: 'Full screen (F)',
+      settings: 'Settings', settingsKey: 'Settings (S)', closeSettings: 'Close settings',
+      nextHours: 'Next hours', nextDays: 'Next days',
+      appearance: 'Appearance', theme: 'Theme', light: 'Light', dark: 'Dark', auto: 'Automatic',
+      themeHint: 'Automatic uses light mode during the day and dark mode after sunset in your city.',
+      language: 'Language',
+      background: 'Background', animations: 'Animations', videos: 'Videos',
+      videoPh: 'Or paste the URL of an .mp4 video', use: 'Use',
+      location: 'Location', useMyLocation: 'Use my current location', searchPh: 'Search for another city…', search: 'Search',
+      display: 'Display', timeFormat: 'Time format', seconds: 'Seconds', show: 'Show', hide: 'Hide',
+      temperature: 'Temperature', forecast: 'Forecast', clockOnly: 'Clock only',
+      performance: 'Performance', highQuality: 'High quality', eco: 'Power saving (Smart TV)',
+      footHtml: 'Remote: use the arrows to move and OK to select. Keyboard: <kbd>F</kbd> full screen · <kbd>T</kbd> theme · <kbd>L</kbd> language · <kbd>B</kbd> background · <kbd>S</kbd> settings.',
+      wmo: {
+        0: 'Clear', 1: 'Mostly clear', 2: 'Partly cloudy', 3: 'Cloudy',
+        45: 'Fog', 48: 'Freezing fog',
+        51: 'Light drizzle', 53: 'Drizzle', 55: 'Heavy drizzle', 56: 'Freezing drizzle', 57: 'Freezing drizzle',
+        61: 'Light rain', 63: 'Rain', 65: 'Heavy rain', 66: 'Freezing rain', 67: 'Heavy freezing rain',
+        71: 'Light snow', 73: 'Snow', 75: 'Heavy snow', 77: 'Snow grains',
+        80: 'Light showers', 81: 'Showers', 82: 'Heavy showers', 85: 'Snow showers', 86: 'Snow showers',
+        95: 'Thunderstorm', 96: 'Thunderstorm with hail', 99: 'Thunderstorm with hail'
+      }
+    }
+  };
 
   var IS_TV = /SMART-TV|SmartTV|Tizen|Web0S|webOS|NetCast|HbbTV|BRAVIA|AFT[A-Z]|CrKey|GoogleTV|Android TV|VIDAA|Roku|Viera|AQUOS|NETTV|PhilipsTV/i.test(navigator.userAgent);
   var IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -44,6 +177,7 @@
   };
 
   var settings = {
+    lang: store.get('lang', 'es'),           // es | en
     theme: store.get('theme', 'auto'),       // light | dark | auto
     bg: store.get('bg', 'auto'),             // auto | id de escena | id de video
     hour12: store.get('hour12', false),
@@ -60,6 +194,18 @@
     offset: null,                            // desfase UTC de la ciudad (segundos)
     isDay: null
   };
+
+  /* ---------- traducción ---------- */
+  function dict() { return I18N[settings.lang] || I18N.es; }
+  function t(key, a, b, c) {
+    var s = dict()[key];
+    if (s === undefined) s = I18N.es[key];
+    if (s === undefined) return key;
+    return typeof s === 'string' ? s.replace('{0}', a).replace('{1}', b).replace('{2}', c) : s;
+  }
+  function localized(name) {
+    return typeof name === 'string' ? name : (name[settings.lang] || name.es);
+  }
 
   /* ---------- DOM ---------- */
   function $(id) { return document.getElementById(id); }
@@ -145,19 +291,25 @@
   }
   function dateKey(n) { return n.year + '-' + pad2(n.mon + 1) + '-' + pad2(n.day); }
 
+  /* "Jueves, 15 de octubre" / "Thursday, October 15" */
+  function fmtDate(n) {
+    if (settings.lang === 'en') return t('days')[n.wd] + ', ' + t('months')[n.mon] + ' ' + n.day;
+    return cap(t('days')[n.wd]) + ', ' + n.day + ' de ' + t('months')[n.mon];
+  }
+  function meridiem(h) { return h < 12 ? t('am') : t('pm'); }
   function fmtHM(h, m) {
     if (!settings.hour12) return pad2(h) + ':' + pad2(m);
-    return (h % 12 || 12) + ':' + pad2(m) + (h < 12 ? ' a. m.' : ' p. m.');
+    return (h % 12 || 12) + ':' + pad2(m) + ' ' + meridiem(h);
   }
   function fmtHour(h) {
     if (!settings.hour12) return pad2(h) + ':00';
-    return (h % 12 || 12) + (h < 12 ? ' a. m.' : ' p. m.');
+    return (h % 12 || 12) + ' ' + meridiem(h);
   }
   /* "2026-10-15T07:32" → "07:32" en el formato elegido */
   function fmtIsoTime(iso) {
     if (!iso) return '—';
-    var t = iso.split('T')[1] || '';
-    return fmtHM(parseInt(t.slice(0, 2), 10), parseInt(t.slice(3, 5), 10));
+    var hm = iso.split('T')[1] || '';
+    return fmtHM(parseInt(hm.slice(0, 2), 10), parseInt(hm.slice(3, 5), 10));
   }
 
   var lastMinute = -1, lastHour = -1;
@@ -165,7 +317,7 @@
     var n = localNow();
     var h = n.h;
     if (settings.hour12) {
-      setText(el.ampm, h < 12 ? 'a. m.' : 'p. m.');
+      setText(el.ampm, meridiem(h));
       h = h % 12 || 12;
       setText(el.hh, String(h));
     } else {
@@ -177,7 +329,7 @@
 
     if (n.m !== lastMinute) {
       lastMinute = n.m;
-      setText(el.date, cap(DAYS[n.wd]) + ', ' + n.day + ' de ' + MONTHS[n.mon]);
+      setText(el.date, fmtDate(n));
       updateDayNight();
       if (n.h !== lastHour) { lastHour = n.h; renderWeather(); }
       renderStatus();
@@ -203,11 +355,11 @@
   };
 
   function applyTheme() {
-    var t = resolvedTheme();
-    root.setAttribute('data-theme', t);
-    if (el.metaTheme) el.metaTheme.setAttribute('content', t === 'light' ? '#eef2f8' : '#05070f');
+    var mode = resolvedTheme();
+    root.setAttribute('data-theme', mode);
+    if (el.metaTheme) el.metaTheme.setAttribute('content', mode === 'light' ? '#eef2f8' : '#05070f');
     el.themeIcon.innerHTML = THEME_ICONS[settings.theme] || THEME_ICONS.auto;
-    if (window.Scenes) Scenes.setMode(t);
+    if (window.Scenes) Scenes.setMode(mode);
   }
 
   function updateDayNight() {
@@ -229,11 +381,50 @@
   }
 
   /* ==========================================================================
+     Idioma
+     ========================================================================== */
+  function eachNode(selector, fn) { toArray(document.querySelectorAll(selector)).forEach(fn); }
+
+  function applyLanguage() {
+    root.setAttribute('lang', settings.lang);
+    document.title = t('title');
+    eachNode('[data-i18n]', function (n) { setText(n, t(n.getAttribute('data-i18n'))); });
+    eachNode('[data-i18n-html]', function (n) { n.innerHTML = t(n.getAttribute('data-i18n-html')); });
+    eachNode('[data-i18n-title]', function (n) { n.setAttribute('title', t(n.getAttribute('data-i18n-title'))); });
+    eachNode('[data-i18n-aria]', function (n) { n.setAttribute('aria-label', t(n.getAttribute('data-i18n-aria'))); });
+    eachNode('[data-i18n-ph]', function (n) { n.setAttribute('placeholder', t(n.getAttribute('data-i18n-ph'))); });
+    buildBgChips();
+    syncChips();
+    renderLocation();
+    if (!state.weather) setText(el.nowDesc, t('loadingWeather'));
+    lastMinute = -1;
+    tick();
+    renderWeather();
+    renderStatus();
+  }
+
+  /* El nombre de la ciudad detectada también se pide en el nuevo idioma */
+  function relocalizeName() {
+    var loc = state.loc;
+    if (!loc || loc.source === 'manual') return;
+    reverseGeocode(loc.lat, loc.lon).then(function (name) {
+      if (state.loc !== loc) return;
+      loc.name = name;
+      store.set('loc', loc);
+      renderLocation();
+    }, function () { /* se queda el nombre anterior */ });
+  }
+
+  function toggleLanguage() {
+    setSetting('lang', settings.lang === 'es' ? 'en' : 'es');
+  }
+
+  /* ==========================================================================
      Fondo (animaciones y videos)
      ========================================================================== */
   function videoList() {
     var list = VIDEOS.slice();
-    if (settings.customVideo) list.push({ id: 'v-custom', name: 'Mi video', src: settings.customVideo, swatch: 'linear-gradient(135deg,#888,#333)' });
+    if (settings.customVideo) list.push({ id: 'v-custom', name: t('myVideo'), src: settings.customVideo, swatch: 'linear-gradient(135deg,#888,#333)' });
     return list;
   }
   function findVideo(id) {
@@ -242,15 +433,10 @@
     return null;
   }
   function bgOptions() {
-    var out = [{ id: 'auto', name: 'Automático (según el clima)' }];
-    Scenes.list.forEach(function (s) { out.push(s); });
-    videoList().forEach(function (v) { out.push(v); });
+    var out = [{ id: 'auto', name: t('autoBg') }];
+    Scenes.list.forEach(function (s) { out.push({ id: s.id, name: t('scene_' + s.id), swatch: s.swatch }); });
+    videoList().forEach(function (v) { out.push({ id: v.id, name: localized(v.name), swatch: v.swatch }); });
     return out;
-  }
-  function bgName(id) {
-    var list = bgOptions();
-    for (var i = 0; i < list.length; i++) if (list[i].id === id) return list[i].name;
-    return id;
   }
 
   /* Escena que acompaña al clima actual */
@@ -312,7 +498,7 @@
     var src = el.video.getAttribute('src');
     if (!src) return;
     videoFailed[src] = true;
-    toast('No se pudo cargar el video. Mostrando una animación.');
+    toast(t('videoFail'));
     stopVideo();
     Scenes.start(autoScene());
   });
@@ -322,7 +508,7 @@
     for (; i < list.length; i++) if (list[i].id === settings.bg) break;
     var next = list[(i + 1) % list.length];
     setSetting('bg', next.id);
-    toast('Fondo: ' + next.name);
+    toast(t('bgIs', next.name));
   }
 
   /* ==========================================================================
@@ -394,21 +580,16 @@
   }
 
   /* Códigos WMO → texto e icono */
+  var WMO_ICON = {
+    0: 'clear', 1: 'clear', 2: 'partly', 3: 'cloudy', 45: 'fog', 48: 'fog',
+    51: 'drizzle', 53: 'drizzle', 55: 'drizzle', 56: 'drizzle', 57: 'drizzle',
+    61: 'rain', 63: 'rain', 65: 'rain', 66: 'rain', 67: 'rain',
+    71: 'snow', 73: 'snow', 75: 'snow', 77: 'snow',
+    80: 'rain', 81: 'rain', 82: 'rain', 85: 'snow', 86: 'snow',
+    95: 'storm', 96: 'storm', 99: 'storm'
+  };
   function wmo(code) {
-    var map = {
-      0: ['Despejado', 'clear'], 1: ['Mayormente despejado', 'clear'], 2: ['Parcialmente nublado', 'partly'], 3: ['Nublado', 'cloudy'],
-      45: ['Niebla', 'fog'], 48: ['Niebla con escarcha', 'fog'],
-      51: ['Llovizna ligera', 'drizzle'], 53: ['Llovizna', 'drizzle'], 55: ['Llovizna intensa', 'drizzle'],
-      56: ['Llovizna helada', 'drizzle'], 57: ['Llovizna helada', 'drizzle'],
-      61: ['Lluvia ligera', 'rain'], 63: ['Lluvia', 'rain'], 65: ['Lluvia fuerte', 'rain'],
-      66: ['Lluvia helada', 'rain'], 67: ['Lluvia helada fuerte', 'rain'],
-      71: ['Nevada ligera', 'snow'], 73: ['Nevada', 'snow'], 75: ['Nevada fuerte', 'snow'], 77: ['Granizo fino', 'snow'],
-      80: ['Chubascos ligeros', 'rain'], 81: ['Chubascos', 'rain'], 82: ['Chubascos fuertes', 'rain'],
-      85: ['Chubascos de nieve', 'snow'], 86: ['Chubascos de nieve', 'snow'],
-      95: ['Tormenta', 'storm'], 96: ['Tormenta con granizo', 'storm'], 99: ['Tormenta con granizo', 'storm']
-    };
-    var m = map[code] || ['—', 'cloudy'];
-    return { text: m[0], icon: m[1] };
+    return { text: t('wmo')[code] || '—', icon: WMO_ICON[code] || 'cloudy' };
   }
 
   var STAT_ICONS = {
@@ -440,17 +621,17 @@
     el.nowIcon.innerHTML = weatherIcon(info.icon, day);
     setText(el.nowTemp, round(c.temperature_2m) + '°');
     setText(el.nowDesc, info.text);
-    setText(el.nowSub, 'Máx ' + round(d.temperature_2m_max[di]) + '° · Mín ' + round(d.temperature_2m_min[di]) + '° · Sensación ' + round(c.apparent_temperature) + '°');
+    setText(el.nowSub, t('hiLoFeels', round(d.temperature_2m_max[di]), round(d.temperature_2m_min[di]), round(c.apparent_temperature)));
 
     var pp = d.precipitation_probability_max ? d.precipitation_probability_max[di] : null;
     var uv = d.uv_index_max ? d.uv_index_max[di] : null;
     el.stats.innerHTML =
-      stat('hum', 'Humedad', round(c.relative_humidity_2m) + '%') +
-      stat('wind', 'Viento', round(c.wind_speed_10m) + windUnit) +
-      stat('rain', 'Lluvia', (pp === null || pp === undefined ? '—' : round(pp) + '%')) +
-      stat('uv', 'Índice UV', round(uv)) +
-      stat('rise', 'Amanecer', fmtIsoTime(d.sunrise[di])) +
-      stat('set', 'Atardecer', fmtIsoTime(d.sunset[di]));
+      stat('hum', t('humidity'), round(c.relative_humidity_2m) + '%') +
+      stat('wind', t('wind'), round(c.wind_speed_10m) + windUnit) +
+      stat('rain', t('rain'), (pp === null || pp === undefined ? '—' : round(pp) + '%')) +
+      stat('uv', t('uv'), round(uv)) +
+      stat('rise', t('sunrise'), fmtIsoTime(d.sunrise[di])) +
+      stat('set', t('sunset'), fmtIsoTime(d.sunset[di]));
 
     // próximas horas
     var html = '';
@@ -462,7 +643,7 @@
         var hh = parseInt(hr.time[i].split('T')[1], 10);
         var p = hr.precipitation_probability ? hr.precipitation_probability[i] : null;
         html += '<div class="hour' + (i === start ? ' now-h' : '') + '">' +
-          '<span class="t">' + (i === start ? 'Ahora' : fmtHour(hh)) + '</span>' +
+          '<span class="t">' + (i === start ? t('now') : fmtHour(hh)) + '</span>' +
           '<span class="i">' + weatherIcon(hi.icon, hr.is_day ? !!hr.is_day[i] : true) + '</span>' +
           '<span class="v">' + round(i === start ? c.temperature_2m : hr.temperature_2m[i]) + '°</span>' +
           '<span class="p">' + (p >= 20 ? p + '%' : '') + '</span></div>';
@@ -478,7 +659,7 @@
       var wd = new Date(Date.UTC(+parts[0], +parts[1] - 1, +parts[2])).getUTCDay();
       var pj = d.precipitation_probability_max ? d.precipitation_probability_max[j] : null;
       html += '<div class="day' + (j === di ? ' today' : '') + '">' +
-        '<span class="t">' + (j === di ? 'Hoy' : DAYS_SHORT[wd]) + '</span>' +
+        '<span class="t">' + (j === di ? t('today') : t('daysShort')[wd]) + '</span>' +
         '<span class="i">' + weatherIcon(dj.icon, true) + '</span>' +
         '<span class="v">' + round(d.temperature_2m_max[j]) + '°<small>' + round(d.temperature_2m_min[j]) + '°</small></span>' +
         '<span class="p">' + (pj >= 30 ? pj + '%' : '') + '</span></div>';
@@ -486,15 +667,15 @@
     el.days.innerHTML = html;
   }
 
-  var statusMsg = '';
+  var statusKey = '';   // clave del mensaje de estado, para poder traducirlo
   function renderStatus() {
     var w = state.weather, txt = '';
-    if (statusMsg) txt = statusMsg;
+    if (statusKey) txt = t(statusKey);
     else if (w && w.fetchedAt) {
       var mins = Math.round((Date.now() - w.fetchedAt) / 60000);
-      txt = 'Actualizado ' + (mins < 1 ? 'hace un momento' : mins < 60 ? 'hace ' + mins + ' min' : 'hace ' + Math.round(mins / 60) + ' h');
+      txt = mins < 1 ? t('updatedNow') : mins < 60 ? t('updatedMin', mins) : t('updatedH', Math.round(mins / 60));
     }
-    setText(el.status, (txt ? txt + ' · ' : '') + 'Clima: Open-Meteo.com');
+    setText(el.status, (txt ? txt + ' · ' : '') + t('weatherCredit'));
   }
 
   var weatherTimer = 0, weatherReq = 0;
@@ -509,19 +690,19 @@
       '&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_probability_max,uv_index_max' +
       '&timezone=auto&forecast_days=7' +
       (settings.unit === 'f' ? '&temperature_unit=fahrenheit&wind_speed_unit=mph' : '');
-    if (!state.weather) { statusMsg = 'Obteniendo clima…'; renderStatus(); }
+    if (!state.weather) { statusKey = 'gettingWeather'; renderStatus(); }
     getJSON(url, 15000).then(function (w) {
       if (req !== weatherReq) return;
       w.fetchedAt = Date.now();
       w.key = weatherKey();
       setWeather(w);
       store.set('weather', w);
-      statusMsg = '';
+      statusKey = '';
       renderStatus();
       weatherTimer = setTimeout(fetchWeather, 15 * 60 * 1000);
     }, function () {
       if (req !== weatherReq) return;
-      statusMsg = state.weather ? 'Sin conexión, mostrando datos guardados' : 'No se pudo cargar el clima, reintentando…';
+      statusKey = state.weather ? 'offline' : 'weatherFail';
       renderStatus();
       weatherTimer = setTimeout(fetchWeather, 60 * 1000);
     });
@@ -555,15 +736,22 @@
   }
   function round3(n) { return Math.round(n * 1000) / 1000; }
 
+  /* Nombre visible: si no se pudo averiguar la ciudad, un texto genérico traducido */
+  function locLabel(loc) {
+    if (!loc) return t('findingLocation');
+    return loc.name || t(loc.source === 'ip' ? 'approxLocation' : 'myLocation');
+  }
+
   function reverseGeocode(lat, lon) {
-    return getJSON('https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=' + lat + '&longitude=' + lon + '&localityLanguage=es', 8000)
+    var lang = settings.lang;
+    return getJSON('https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=' + lat + '&longitude=' + lon + '&localityLanguage=' + lang, 8000)
       .then(function (r) {
         var name = joinName(r.city || r.locality, r.principalSubdivision || r.countryName);
         if (!name) throw new Error('vacío');
         return name;
       })
       .catch(function () {
-        return getJSON('https://nominatim.openstreetmap.org/reverse?format=json&zoom=10&accept-language=es&lat=' + lat + '&lon=' + lon, 8000)
+        return getJSON('https://nominatim.openstreetmap.org/reverse?format=json&zoom=10&accept-language=' + lang + '&lat=' + lat + '&lon=' + lon, 8000)
           .then(function (r) {
             var a = r.address || {};
             var name = joinName(a.city || a.town || a.village || a.municipality || a.county, a.state || a.country);
@@ -577,14 +765,14 @@
     function make(lat, lon, city, region) {
       lat = parseFloat(lat); lon = parseFloat(lon);
       if (isNaN(lat) || isNaN(lon)) throw new Error('sin coordenadas');
-      return { lat: round3(lat), lon: round3(lon), name: joinName(city, region) || 'Ubicación aproximada', source: 'ip' };
+      return { lat: round3(lat), lon: round3(lon), name: joinName(city, region), source: 'ip' };
     }
     return firstOk([
       function () { return getJSON('https://get.geojs.io/v1/ip/geo.json', 8000).then(function (r) { return make(r.latitude, r.longitude, r.city, r.region); }); },
       function () { return getJSON('https://ipapi.co/json/', 8000).then(function (r) { return make(r.latitude, r.longitude, r.city, r.region); }); },
       function () { return getJSON('https://ipwho.is/', 8000).then(function (r) { if (r.success === false) throw new Error('ipwho'); return make(r.latitude, r.longitude, r.city, r.region); }); }
     ]).then(function (loc) {
-      // nombre en español a partir de las coordenadas
+      // nombre en el idioma elegido a partir de las coordenadas
       return reverseGeocode(loc.lat, loc.lon).then(function (name) { loc.name = name; return loc; }, function () { return loc; });
     });
   }
@@ -610,7 +798,7 @@
     return reverseGeocode(lat, lon).then(function (name) {
       return { lat: lat, lon: lon, name: name, source: 'gps' };
     }, function () {
-      return { lat: lat, lon: lon, name: 'Mi ubicación', source: 'gps' };
+      return { lat: lat, lon: lon, name: '', source: 'gps' };
     });
   }
 
@@ -618,29 +806,25 @@
   function locate(userAsked) {
     if (locating) return;
     locating = true;
-    if (!state.loc) setText(el.locName, 'Buscando ubicación…');
-    if (userAsked) toast('Buscando tu ubicación…');
+    if (!state.loc) setText(el.locName, t('findingLocation'));
+    if (userAsked) toast(t('locating'));
     gpsPosition(function late(p) {
       // el usuario aceptó el permiso tarde: mejoramos la ubicación aproximada
       if (state.loc && state.loc.source === 'ip') fromPosition(p).then(setLocation);
     })
       .then(fromPosition, function (err) {
-        if (userAsked) {
-          toast(err && err.code === 1
-            ? 'Permiso de ubicación denegado. Usando ubicación aproximada.'
-            : 'GPS no disponible. Usando ubicación aproximada.', 3600);
-        }
+        if (userAsked) toast(t(err && err.code === 1 ? 'gpsDenied' : 'gpsUnavailable'), 3600);
         return ipLocation();
       })
       .then(function (loc) {
         locating = false;
         setLocation(loc);
-        if (userAsked) toast('Ubicación: ' + loc.name);
+        if (userAsked) toast(t('locationIs', locLabel(loc)));
       }, function () {
         locating = false;
         if (!state.loc) {
-          setText(el.locName, 'Elige tu ciudad');
-          toast('No se pudo detectar tu ubicación. Elígela en Ajustes.', 4500);
+          setText(el.locName, t('chooseCity'));
+          toast(t('locateFail'), 4500);
         }
       });
   }
@@ -656,21 +840,20 @@
     if (!near || !state.weather) fetchWeather();
   }
 
-  var SOURCE_LABEL = { gps: 'GPS', ip: 'Aproximada', manual: 'Elegida' };
   function renderLocation() {
     var loc = state.loc;
-    setText(el.locName, loc ? loc.name : 'Buscando ubicación…');
-    setText(el.panelLoc, loc ? loc.name : 'Sin ubicación');
-    setText(el.panelLocSrc, loc ? SOURCE_LABEL[loc.source] || '' : '');
+    setText(el.locName, locLabel(loc));
+    setText(el.panelLoc, loc ? locLabel(loc) : t('noLocation'));
+    setText(el.panelLocSrc, loc ? t('src_' + loc.source) : '');
     el.panelLocSrc.style.display = loc ? '' : 'none';
   }
 
   function searchCity(q) {
-    el.results.innerHTML = '<p class="empty">Buscando…</p>';
-    getJSON('https://geocoding-api.open-meteo.com/v1/search?count=8&language=es&format=json&name=' + encodeURIComponent(q), 10000)
+    el.results.innerHTML = '<p class="empty">' + esc(t('searching')) + '</p>';
+    getJSON('https://geocoding-api.open-meteo.com/v1/search?count=8&format=json&language=' + settings.lang + '&name=' + encodeURIComponent(q), 10000)
       .then(function (r) {
         var list = r.results || [];
-        if (!list.length) { el.results.innerHTML = '<p class="empty">No encontré esa ciudad. Prueba con otro nombre.</p>'; return; }
+        if (!list.length) { el.results.innerHTML = '<p class="empty">' + esc(t('notFound')) + '</p>'; return; }
         el.results.innerHTML = list.map(function (c) {
           var region = [c.admin1, c.country].filter(Boolean).join(', ');
           return '<button class="chip" type="button" data-city="' + esc(JSON.stringify({ lat: round3(c.latitude), lon: round3(c.longitude), name: joinName(c.name, c.admin1 || c.country) })) + '">' +
@@ -679,7 +862,7 @@
         var first = el.results.querySelector('button');
         if (first && root.className.indexOf('using-keys') >= 0) first.focus();
       }, function () {
-        el.results.innerHTML = '<p class="empty">Sin conexión. Inténtalo de nuevo.</p>';
+        el.results.innerHTML = '<p class="empty">' + esc(t('searchOffline')) + '</p>';
       });
   }
 
@@ -692,11 +875,11 @@
   }
 
   function buildBgChips() {
-    var html = chip('data-set="bg" data-value="auto"', 'Automático', 'conic-gradient(#ffd56b,#7cc4e4,#5a6b8c,#ffd56b)');
-    Scenes.list.forEach(function (s) { html += chip('data-set="bg" data-value="' + s.id + '"', s.name, s.swatch); });
+    var html = chip('data-set="bg" data-value="auto"', t('auto'), 'conic-gradient(#ffd56b,#7cc4e4,#5a6b8c,#ffd56b)');
+    Scenes.list.forEach(function (s) { html += chip('data-set="bg" data-value="' + s.id + '"', t('scene_' + s.id), s.swatch); });
     el.sceneChips.innerHTML = html;
     html = '';
-    videoList().forEach(function (v) { html += chip('data-set="bg" data-value="' + v.id + '"', v.name, v.swatch); });
+    videoList().forEach(function (v) { html += chip('data-set="bg" data-value="' + v.id + '"', localized(v.name), v.swatch); });
     el.videoChips.innerHTML = html;
   }
 
@@ -710,9 +893,14 @@
   function parseValue(v) { return v === 'true' ? true : v === 'false' ? false : v; }
 
   function setSetting(key, value) {
+    if (key === 'lang' && !I18N[value]) value = 'es';
+    var changed = settings[key] !== value;
     settings[key] = value;
     store.set(key, value);
     switch (key) {
+      case 'lang':
+        if (changed) { applyLanguage(); relocalizeName(); toast(t('langToast')); }
+        break;
       case 'theme': applyTheme(); break;
       case 'bg': applyBackground(); break;
       case 'hour12': lastMinute = -1; tick(); renderWeather(); break;
@@ -726,13 +914,14 @@
   }
 
   /* Ajustes desde la URL, útil para guardar un favorito en la TV:
-     ?bg=v-olas&theme=dark&forecast=false */
+     ?lang=en&bg=v-olas&theme=dark&forecast=false */
   function readUrlParams() {
     var q = location.search.replace(/^\?/, '');
     if (!q) return;
     q.split('&').forEach(function (pair) {
       var kv = pair.split('='), k = decodeURIComponent(kv[0] || ''), v = decodeURIComponent((kv[1] || '').replace(/\+/g, ' '));
       if (!(k in settings) || k === 'customVideo') return;
+      if (k === 'lang' && !I18N[v]) return;
       settings[k] = parseValue(v);
       store.set(k, settings[k]);
     });
@@ -781,16 +970,14 @@
     }
     var req = d.requestFullscreen || d.webkitRequestFullscreen || d.webkitRequestFullScreen || d.mozRequestFullScreen || d.msRequestFullscreen;
     if (!req) {
-      toast(IS_IOS
-        ? 'En iPhone/iPad: toca Compartir → "Agregar a inicio" y ábrela desde ahí, sin barra de URL.'
-        : 'Este navegador no permite pantalla completa. Busca la opción en el menú del navegador.', 5500);
+      toast(t(IS_IOS ? 'fsIos' : 'fsUnsupported'), 5500);
       return;
     }
     try {
       r = req.call(d, { navigationUI: 'hide' });
-      if (r && r.catch) r.catch(function () { toast('El navegador bloqueó la pantalla completa.'); });
+      if (r && r.catch) r.catch(function () { toast(t('fsBlocked')); });
     } catch (e) {
-      toast('El navegador bloqueó la pantalla completa.');
+      toast(t('fsBlocked'));
     }
     requestWakeLock();
   }
@@ -914,12 +1101,13 @@
     var ch = (k || '').toLowerCase();
     if (ch === 'f' || c === 405) { e.preventDefault(); toggleFullscreen(); }
     else if (ch === 't' || c === 404) { e.preventDefault(); cycleTheme(); }
+    else if (ch === 'l') { e.preventDefault(); toggleLanguage(); }
     else if (ch === 'b' || ch === 'n' || c === 403) { e.preventDefault(); nextBackground(); }
     else if (ch === 's' || ch === ',' || c === 406) { e.preventDefault(); if (panelOpen) closePanel(); else openPanel(); }
   });
 
   ['mousemove', 'mousedown', 'touchstart', 'wheel'].forEach(function (ev) {
-    document.addEventListener(ev, function (e) {
+    document.addEventListener(ev, function () {
       if (ev !== 'mousemove') root.classList.remove('using-keys');
       wake();
       if (ev !== 'mousemove') { requestWakeLock(); resumeVideo(); }
@@ -952,32 +1140,32 @@
     var order = ['auto', 'light', 'dark'];
     var next = order[(order.indexOf(settings.theme) + 1) % order.length];
     setSetting('theme', next);
-    toast({ auto: 'Tema automático (día/noche)', light: 'Modo claro', dark: 'Modo oscuro' }[next]);
+    toast(t('themeToast_' + next));
   }
 
   /* ---------- clics ---------- */
   document.addEventListener('click', function (e) {
-    var t = closest(e.target, '[data-action], [data-set], [data-city], #locBtn');
-    if (!t) {
+    var target = closest(e.target, '[data-action], [data-set], [data-city], #locBtn');
+    if (!target) {
       if (panelOpen && e.target === el.overlay) closePanel();
       return;
     }
-    if (t.id === 'locBtn') { openPanel('secLoc'); return; }
-    if (t.hasAttribute('data-set')) {
-      setSetting(t.getAttribute('data-set'), parseValue(t.getAttribute('data-value')));
+    if (target.id === 'locBtn') { openPanel('secLoc'); return; }
+    if (target.hasAttribute('data-set')) {
+      setSetting(target.getAttribute('data-set'), parseValue(target.getAttribute('data-value')));
       return;
     }
-    if (t.hasAttribute('data-city')) {
-      var c = JSON.parse(t.getAttribute('data-city'));
+    if (target.hasAttribute('data-city')) {
+      var c = JSON.parse(target.getAttribute('data-city'));
       c.source = 'manual';
       setLocation(c);
       el.results.innerHTML = '';
       el.searchInput.value = '';
-      toast('Ubicación: ' + c.name);
+      toast(t('locationIs', locLabel(c)));
       closePanel();
       return;
     }
-    switch (t.getAttribute('data-action')) {
+    switch (target.getAttribute('data-action')) {
       case 'bg': nextBackground(); break;
       case 'theme': cycleTheme(); break;
       case 'fullscreen': toggleFullscreen(); break;
@@ -996,11 +1184,11 @@
   el.videoForm.addEventListener('submit', function (e) {
     e.preventDefault();
     var url = el.videoUrl.value.replace(/^\s+|\s+$/g, '');
-    if (!/^https?:\/\//i.test(url) && !/\.(mp4|webm|m4v|mov)(\?|$)/i.test(url)) { toast('Pega un enlace a un video (.mp4 o .webm)'); return; }
+    if (!/^https?:\/\//i.test(url) && !/\.(mp4|webm|m4v|mov)(\?|$)/i.test(url)) { toast(t('badVideo')); return; }
     delete videoFailed[url];
     setSetting('customVideo', url);
     setSetting('bg', 'v-custom');
-    toast('Fondo: Mi video');
+    toast(t('bgIs', t('myVideo')));
   });
 
   /* Protección contra marcas en pantallas OLED: el contenido se mueve unos píxeles */
@@ -1021,16 +1209,16 @@
      ========================================================================== */
   function boot() {
     readUrlParams();
+    if (!I18N[settings.lang]) settings.lang = 'es';
     root.setAttribute('data-quality', settings.quality);
     body.classList.toggle('no-seconds', !settings.seconds);
     body.classList.toggle('minimal', !settings.forecast);
     Scenes.init(el.canvas);
     Scenes.setQuality(settings.quality);
-    buildBgChips();
+    applyLanguage();
 
     // datos guardados para mostrar algo al instante
     var cached = store.get('weather', null);
-    renderLocation();
     if (state.loc && cached && cached.key === weatherKey() && Date.now() - cached.fetchedAt < 6 * 3600 * 1000) {
       setWeather(cached);
     } else {

@@ -12,6 +12,7 @@ Página web con un reloj grande y el clima de tu ciudad sobre fondos relajantes 
   - 10 videos: olas, atardecer, lluvia, cascada, aurora boreal, estrellas, nieve, chimenea y nubes.
   - Modo **Automático**: elige el fondo según el clima y la hora.
 - **Tema**: Claro, Oscuro o Automático. El automático cambia a oscuro al anochecer en tu ciudad.
+- **Idioma**: español o inglés, en **Ajustes → Apariencia**. Se traduce toda la página, incluidos la fecha, el clima y el nombre de la ciudad detectada.
 - **Pantalla completa** con un botón, sin barra de URL.
 - **Modo Ahorro (Smart TV)**: reduce la resolución y la fluidez de las animaciones para que vayan suaves en TVs con poca potencia. Se activa solo cuando detecta una TV.
 - Detalles para TV:
@@ -61,6 +62,7 @@ Los botones de colores funcionan solo en las TVs cuyo navegador los envía a la 
 | --- | --- |
 | `F` | Pantalla completa |
 | `T` | Cambiar tema |
+| `L` | Cambiar idioma (español / inglés) |
 | `B` | Siguiente fondo |
 | `S` | Ajustes |
 | `Esc` | Cerrar |
@@ -75,6 +77,7 @@ https://angelcoronaaa.github.io/time/?bg=v-olas&theme=dark&forecast=false
 
 | Parámetro | Valores |
 | --- | --- |
+| `lang` | `es`, `en` |
 | `bg` | `auto`, `aurora`, `ocean`, `clouds`, `rain`, `snow`, `stars`, `fireflies`, `v-olas`, `v-atardecer`, `v-lluvia-hojas`, `v-lluvia-lago`, `v-cascada`, `v-aurora`, `v-estrellas`, `v-nieve`, `v-chimenea`, `v-nubes` |
 | `theme` | `auto`, `light`, `dark` |
 | `hour12` | `true`, `false` |
@@ -96,7 +99,7 @@ Al abrirla desde ese ícono se ve en pantalla completa, como una app.
 - **De forma permanente**: copia el archivo a una carpeta `videos/` y agrégalo a la lista `VIDEOS` al inicio de `js/app.js`:
 
   ```js
-  { id: 'v-mio', name: 'Mi video', src: 'videos/mi-video.mp4', swatch: '#345' }
+  { id: 'v-mio', name: { es: 'Mi video', en: 'My video' }, src: 'videos/mi-video.mp4', swatch: '#345' }
   ```
 
 Para TV conviene usar videos en 720p o 1080p de pocos MB, que se puedan repetir en bucle.
@@ -107,7 +110,7 @@ Para TV conviene usar videos en 720p o 1080p de pocos MB, que se puedan repetir 
 index.html            Estructura de la página
 css/styles.css        Estilos, liquid glass, temas claro y oscuro
 js/scenes.js          Animaciones de fondo (canvas)
-js/app.js             Reloj, clima, ubicación, ajustes y control remoto
+js/app.js             Reloj, clima, ubicación, ajustes, textos en español e inglés y control remoto
 manifest.webmanifest  Instalación en pantalla completa
 icons/                Íconos de la app
 ```
