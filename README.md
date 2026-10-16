@@ -117,6 +117,8 @@ icons/                Íconos de la app
 
 No usa frameworks ni compilación. El JavaScript es ES5 para que funcione en navegadores de TV antiguos.
 
+Si modificas `css/styles.css` o algún archivo de `js/`, sube el número `?v=` de sus enlaces en `index.html` (por ejemplo, de `?v=3` a `?v=4`). Así los navegadores descargan la versión nueva en lugar de usar la guardada en caché.
+
 ## Créditos
 
 - Datos del clima: [Open-Meteo.com](https://open-meteo.com) (CC BY 4.0).
